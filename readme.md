@@ -20,6 +20,18 @@ services:
       - "dashboard.dev:172.18.0.1"
 ```
 
+## WP-CLI
+
+I like WP-CLI, so wanted to figure out how to run wp-cli commands without loading bash inside one of the containers. Again,
+many thanks to John Bloch on this, I have this alias configured in my `~/.bash_profile`. 
+
+```
+alias dcwp='docker-compose exec --user www-data phpfpm wp'
+```
+
+Instead of running a command like `wp plugin install` you instead run `dcwp plugin install` from anywhere inside the 
+`<my-project-name>` directory, and it runs the command inside of the php container.
+
 ## Credits
 
 This is pretty much based on work from John Bloch. Credit where credit is due. 
