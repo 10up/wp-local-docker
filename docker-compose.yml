@@ -28,6 +28,10 @@ services:
     volumes:
       - "./wordpress:/var/www/html"
 #      - "./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini"
+    links:
+       - mysql
+       - memcached
+       - elasticsearch
     restart: always
     extra_hosts:
       - "docker-local.dev:172.18.0.1"
@@ -40,4 +44,6 @@ services:
     volumes:
       - "./wordpress:/var/www/html"
       - "./dockerfiles/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+    links:
+      - phpfpm
     restart: always
