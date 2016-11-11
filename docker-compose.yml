@@ -23,7 +23,6 @@ services:
       - mysql
       - memcached
       - elasticsearch
-      - mailhog
     image: cmmarslender/phpfpm:latest
     build: dockerfiles/php-fpm
     volumes:
