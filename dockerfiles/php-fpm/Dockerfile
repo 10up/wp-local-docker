@@ -48,6 +48,10 @@ RUN curl https://getcomposer.org/download/1.2.0/composer.phar > /tmp/composer.ph
     && chmod +x /tmp/wp-cli.phar \
     && mv /tmp/wp-cli.phar /usr/local/bin/wp
 
+RUN apt-get update && apt-get install -y mysql-client \
+    && apt-get autoremove -y \
+    && apt-get clean
+
 CMD ["php-fpm"]
 
 EXPOSE 9000

@@ -23,11 +23,10 @@ services:
       - mysql
       - memcached
       - elasticsearch
-    image: cmmarslender/phpfpm:latest
     build: dockerfiles/php-fpm
     volumes:
       - "./wordpress:/var/www/html"
-#      - "./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini"
+      - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
     restart: always
     extra_hosts:
       - "docker-local.dev:172.18.0.1"
@@ -39,5 +38,5 @@ services:
     image: nginx:latest
     volumes:
       - "./wordpress:/var/www/html"
-      - "./dockerfiles/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
     restart: always
