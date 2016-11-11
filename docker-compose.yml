@@ -18,6 +18,8 @@ services:
   elasticsearch:
     image: elasticsearch:2
     restart: always
+    ports:
+      - "9200:9200"
   phpfpm:
     depends_on:
       - mysql
