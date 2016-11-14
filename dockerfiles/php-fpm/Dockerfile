@@ -52,6 +52,10 @@ RUN apt-get update && apt-get install -y mysql-client \
     && apt-get autoremove -y \
     && apt-get clean
 
+RUN curl -L https://phar.phpunit.de/phpunit.phar > /tmp/phpunit.phar \
+    && chmod +x /tmp/phpunit.phar \
+    && mv /tmp/phpunit.phar /usr/local/bin/phpunit
+
 CMD ["php-fpm"]
 
 EXPOSE 9000
