@@ -25,7 +25,7 @@ services:
       - mysql
       - memcached
       - elasticsearch
-    build: dockerfiles/php-fpm
+    image: johnpbloch/phpfpm:7.0
     volumes:
       - "./wordpress:/var/www/html"
       - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
