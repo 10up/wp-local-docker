@@ -33,3 +33,5 @@ config.codekit
 /data/*
 !/data/.gitkeep
 docker-compose.override.yml
+
+notes.md
