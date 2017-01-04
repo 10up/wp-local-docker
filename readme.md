@@ -37,7 +37,7 @@ Instead of running a command like `wp plugin install` you instead run `dcwp plug
 You can easily access the WordPress/PHP container with `docker-compose exec`. Here's a simple alias to add to your `~/.bash_profile`:
 
 ```
-alias dcbash='docker-compose exec --user www-data phpfpm bash'
+alias dcbash='docker-compose exec --user root phpfpm bash'
 ```
 
 This alias lets you run `dcbash` to SSH into the PHP/WordPress container.
