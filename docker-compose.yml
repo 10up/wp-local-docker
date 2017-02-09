@@ -16,7 +16,7 @@ services:
     image: memcached:latest
     restart: always
   elasticsearch:
-    image: elasticsearch:5.2
+    image: elasticsearch:5
     restart: always
     ports:
       - "9200:9200"
