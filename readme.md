@@ -4,10 +4,9 @@
 1. `git clone git@github.com:cmmarslender/docker-template.git <my-project-name>`
 1. `cd <my-project-name>`
 1. `docker-compose up`
+1. Run `bash setup.sh` to download WordPress and create a `wp-config.php` file.
 
-The `wordpress` folder is configured as the webroot by default. Download WordPress and anything else you need here.
-
-## Overrides File
+## Docker Compose Overrides File
 
 I typically add a `docker-compose.override.yml` file alongside the docker-compose.yml file, with contents similar to
 the following to change the domain associated with the cluster while retaining ability to pull in changes from the repo.

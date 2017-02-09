@@ -16,21 +16,24 @@ services:
     image: memcached:latest
     restart: always
   elasticsearch:
-    image: elasticsearch:2
+    image: elasticsearch:5
     restart: always
     ports:
       - "9200:9200"
+    volumes:
+      - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+      - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
   phpfpm:
     depends_on:
       - mysql
       - memcached
       - elasticsearch
-    image: johnpbloch/phpfpm:7.0
     volumes:
       - "./wordpress:/var/www/html"
       - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
       - "./config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
     restart: always
+    build: ./dockerfiles/php-fpm
     extra_hosts:
       - "docker-local.dev:172.18.0.1"
   nginx:
