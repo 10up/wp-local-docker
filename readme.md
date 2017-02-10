@@ -29,7 +29,7 @@ Default MySQL connection information (from within PHP-FPM container):
 
 ```
 Database: wordpress
-Username: root
+Username: wordpress
 Password: password
 Host: mysql
 ```
