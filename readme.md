@@ -1,15 +1,47 @@
-# Template for Docker Development Environments
+# WordPress Docker Development Environment
+
+This is a Docker based local development environment for WordPress.
+
+## What's Inside
+
+This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MariaDB, Elasticsearch, nginx, and Memcached. The `/wordpress` directory is the web root which is mapped to the nginx container.
+
+You can directly edit PHP, nginx, and Elasticsearch configuration files from within the repo as they are mapped to the correct locations in containers.
+
+A `Dockerfile` is included for PHP-FPM (`/dockerfiles/php-fpm/Dockerfile`). This adds a few extra things to the PHP-FPM image.
+
+The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in the Elasticsearch container. You can drop Elasticsearch plugins in this folder to have them installed within the container.
+
+## Requirements
+
+* [Docker](https://www.docker.com/)
+* [docker-compose](https://docs.docker.com/compose/)
 
 ## Setup
+
 1. `git clone git@github.com:cmmarslender/docker-template.git <my-project-name>`
 1. `cd <my-project-name>`
 1. `docker-compose up`
 1. Run `bash setup.sh` to download WordPress and create a `wp-config.php` file.
+1. Navigate to `http://localhost` in a browser to finish WordPress setup.
+
+Default MySQL connection information (from within PHP-FPM container):
+
+```
+Database: wordpress
+Username: wordpress
+Password: password
+Host: mysql
+```
+
+Default Elasticsearch connection information (from within PHP-FPM container):
+
+```Host: http://elasticsearch:9200```
 
 ## Docker Compose Overrides File
 
-I typically add a `docker-compose.override.yml` file alongside the docker-compose.yml file, with contents similar to
-the following to change the domain associated with the cluster while retaining ability to pull in changes from the repo.
+Adding a `docker-compose.override.yml` file alongside the `docker-compose.yml` file, with contents similar to
+the following, allows you to change the domain associated with the cluster while retaining the ability to pull in changes from the repo.
 
 ```
 version: '2'
@@ -21,8 +53,7 @@ services:
 
 ## WP-CLI
 
-I like WP-CLI, so wanted to figure out how to run wp-cli commands without loading bash inside one of the containers. Again,
-many thanks to John Bloch on this, I have this alias configured in my `~/.bash_profile`. 
+Add this alias to `~/.bash_profile` to easily run WP-CLI command. 
 
 ```
 alias dcwp='docker-compose exec --user www-data phpfpm wp'
@@ -43,4 +74,4 @@ This alias lets you run `dcbash` to SSH into the PHP/WordPress container.
 
 ## Credits
 
-This is pretty much based on work from John Bloch. Credit where credit is due. 
+This project is our own flavor of an environment created by John Bloch.
