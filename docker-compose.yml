@@ -46,3 +46,18 @@ services:
       - "./wordpress:/var/www/html"
       - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
     restart: always
+  gearman:
+    image: kendu/gearman:latest
+    restart: always
+  worker:
+    depends_on:
+      - mysql
+      - memcached
+      - elasticsearch
+    volumes:
+      - "./wordpress:/var/www/html"
+      - "./config/wp-gears-worker/php.ini:/usr/local/etc/php/php.ini"
+      - "./config/wp-gears-worker/supervisord.conf:/etc/supervisord.conf"
+      - "./config/wp-gears-worker/supervisord.d:/etc/supervisord.d"
+    restart: always
+    build: ./dockerfiles/wp-gears-worker

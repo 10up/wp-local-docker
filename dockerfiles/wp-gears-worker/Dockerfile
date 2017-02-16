@@ -16,12 +16,11 @@ RUN apt-get update \
 	&& rm -r pecl-gearman-master \
 	&& docker-php-ext-enable gearman
 
-RUN curl -L https://phar.phpunit.de/phpunit.phar > /tmp/phpunit.phar \
-    && chmod +x /tmp/phpunit.phar \
-    && mv /tmp/phpunit.phar /usr/local/bin/phpunit
+RUN apt-get update \
+	&& apt-get install -y supervisor \
+	&& apt-get clean
 
-RUN apt-get install -y git subversion wget
+RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /etc/supervisord.d
 
-CMD ["php-fpm"]
-
-EXPOSE 9000
+CMD ["/usr/bin/supervisord", "-n"]
