@@ -4,7 +4,7 @@ This is a Docker based local development environment for WordPress.
 
 ## What's Inside
 
-This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MariaDB, Elasticsearch, nginx, and Memcached. The `/wordpress` directory is the web root which is mapped to the nginx container.
+This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MariaDB, Elasticsearch, nginx, and Memcached. Additionally, to support using [WP Gears](https://github.com/10up/wp-gears), two additional containers are started - a gearman queue and a worker. The `/wordpress` directory is the web root which is mapped to the nginx, php, and worker containers.
 
 You can directly edit PHP, nginx, and Elasticsearch configuration files from within the repo as they are mapped to the correct locations in containers.
 
@@ -37,6 +37,37 @@ Host: mysql
 Default Elasticsearch connection information (from within PHP-FPM container):
 
 ```Host: http://elasticsearch:9200```
+
+### WP Gears Setup
+
+It's easy to set up WP Gears using this docker configuration - just run the following commands from the `wordpress` folder.
+
+1. Clone the WP Gears plugin to the plugins directory - `git clone https://github.com/10up/WP-Gears.git wp-content/plugins/wp-gears`
+2. Symlink the worker file to the web root - `ln -s wp-content/plugins/wp-gears/wp-gears-runner.php .`
+3. Add the following to `config/wp-gears-worker/conf.d/wp-gears.ini`
+
+    ```
+    [program:wp-gears]
+    command=/usr/local/bin/php /var/www/html/wp-gears-runner.php
+    process_name=%(program_name)s-%(process_num)02d
+    numprocs=2
+    directory=/var/www/html
+    autostart=true
+    autorestart=true
+    killasgroup=true
+    user=www-data
+    startsecs=0
+    ```
+    
+4. Add the following to your `wp-config.php` file
+
+    ```
+    global $gearman_servers;
+    $gearman_servers = array(
+      'gearman:4730',
+    );
+    define( 'WP_ASYNC_TASK_SALT', 'wp-docker-1' );
+    ```
 
 ## Docker Compose Overrides File
 
