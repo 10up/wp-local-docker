@@ -19,7 +19,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 ## Setup
 
-1. `git clone git@github.com:cmmarslender/docker-template.git <my-project-name>`
+1. `git clone git@github.com:10up/wp-docker.git <my-project-name>`
 1. `cd <my-project-name>`
 1. `docker-compose up`
 1. Run `bash setup.sh` to download WordPress and create a `wp-config.php` file.
@@ -53,13 +53,13 @@ services:
 
 ## WP-CLI
 
-Add this alias to `~/.bash_profile` to easily run WP-CLI command. 
+Add this alias to `~/.bash_profile` to easily run WP-CLI command.
 
 ```
 alias dcwp='docker-compose exec --user www-data phpfpm wp'
 ```
 
-Instead of running a command like `wp plugin install` you instead run `dcwp plugin install` from anywhere inside the 
+Instead of running a command like `wp plugin install` you instead run `dcwp plugin install` from anywhere inside the
 `<my-project-name>` directory, and it runs the command inside of the php container.
 
 ## SSH Access
