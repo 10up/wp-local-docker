@@ -22,7 +22,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 1. `git clone git@github.com:10up/wp-docker.git <my-project-name>`
 1. `cd <my-project-name>`
 1. `docker-compose up`
-1. Run `bash setup.sh` to download WordPress and create a `wp-config.php` file.
+1. Run `./bin/setup` to download WordPress and create a `wp-config.php` file.
 1. Navigate to `http://localhost` in a browser to finish WordPress setup.
 
 Default MySQL connection information (from within PHP-FPM container):
@@ -62,6 +62,8 @@ alias dcwp='docker-compose exec --user www-data phpfpm wp'
 Instead of running a command like `wp plugin install` you instead run `dcwp plugin install` from anywhere inside the
 `<my-project-name>` directory, and it runs the command inside of the php container.
 
+There is also a script in the `/bin` directory that will allow you to execute WP CLI from the project directory directly: `./bin/wp plugin install`.
+
 ## SSH Access
 
 You can easily access the WordPress/PHP container with `docker-compose exec`. Here's a simple alias to add to your `~/.bash_profile`:
@@ -71,6 +73,8 @@ alias dcbash='docker-compose exec --user root phpfpm bash'
 ```
 
 This alias lets you run `dcbash` to SSH into the PHP/WordPress container.
+
+Alternatively, there is a script in the `/bin` directory that allows you to SSH in to the environment from the project directory directly: `./bin/ssh`.
 
 ## Credits
 
