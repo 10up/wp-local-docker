@@ -38,6 +38,8 @@ Default Elasticsearch connection information (from within PHP-FPM container):
 
 ```Host: http://elasticsearch:9200```
 
+The Elasticsearch container is configured for a maximum heap size of 750MB to prevent out of memory crashes when using the default 2GB memory limit enforced by Docker for Mac and Docker for Windows installations or for Linux installations limited to less than 2GB. If you require additional memory for Elasticsearch override the value in a `docker-compose.override.yml` file as described below.
+
 ## Docker Compose Overrides File
 
 Adding a `docker-compose.override.yml` file alongside the `docker-compose.yml` file, with contents similar to
@@ -49,6 +51,9 @@ services:
   phpfpm:
     extra_hosts:
       - "dashboard.dev:172.18.0.1"
+  elasticsearch:
+    environment:
+      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
 ```
 
 ## WP-CLI
