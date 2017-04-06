@@ -18,6 +18,8 @@ services:
   elasticsearch:
     image: elasticsearch:5
     restart: always
+    environment:
+      ES_JAVA_OPTS: "-Xms750m -Xmx750m"
     ports:
       - "9200:9200"
     volumes:
