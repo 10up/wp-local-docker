@@ -24,7 +24,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 1. `docker-compose up`
 1. Run setup to download WordPress and create a `wp-config.php` file.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
-	2. On Windows, run `./bin/setup`.
+	2. On Windows, run `./bin/setup.bat`.
 1. Navigate to `http://localhost` in a browser to finish WordPress setup.
 
 Default MySQL connection information (from within PHP-FPM container):
