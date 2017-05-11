@@ -26,7 +26,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
 	2. On Windows, run `./bin/setup`.
 1. Navigate to `http://localhost` in a browser to finish WordPress setup.
-	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your [OS hosts file](https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/). Ex: `127.0.0.1 docker.dev` and set your WordPress Address and Site Address in Settings>>General to `docker.dev`.
+	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your [OS hosts file](https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/). Ex: `127.0.0.1 docker.dev` and set your WordPress Address and Site Address in WordPress admin >> Settings >> General to `http://docker.dev`.
 
 Default MySQL connection information (from within PHP-FPM container):
 
