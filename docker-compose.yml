@@ -30,6 +30,8 @@ services:
       - mysql
       - memcached
       - elasticsearch
+    links:
+      - mail
     volumes:
       - "./wordpress:/var/www/html"
       - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
@@ -48,3 +50,8 @@ services:
       - "./wordpress:/var/www/html"
       - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
     restart: always
+  mail:
+    image: helder/mailcatcher
+    ports:
+        - 1025:1025
+        - 1080:80
