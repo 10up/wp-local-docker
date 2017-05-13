@@ -4,6 +4,7 @@ services:
     image: mysql:latest
     volumes:
       - "./data/db:/var/lib/mysql"
+      - "./config/mysql/:/etc/mysql/conf.d/"
     restart: unless-stopped
     expose:
       - 3306

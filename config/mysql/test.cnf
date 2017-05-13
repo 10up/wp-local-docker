@@ -1,0 +1,11 @@
+[mysqld]
+#innodb_log_file_size=1M
+innodb_fast_shutdown=2
+#innodb_data_file_path=ibdata1:10M;ibdata2:10M:autoextend
+innodb_flush_log_at_trx_commit=0
+innodb_doublewrite=0
+innodb_checksums=0
+innodb_support_xa=0
+query_cache_size=0
+sync_frm=0
+
