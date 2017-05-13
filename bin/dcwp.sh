@@ -104,6 +104,9 @@ case "$1" in
 	wp)
 		wp_cli $@
 		;;
+	mysql)
+		docker-compose exec mysql mysql -u root --password=password $COMPOSE_PROJECT_NAME
+		;;
 	*)
 		echo "Usage: $0 [start|stop|bash|wp]" >&2
 		exit 3
