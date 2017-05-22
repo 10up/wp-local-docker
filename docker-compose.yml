@@ -12,6 +12,14 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: password
+  mailcatcher:
+    image: schickling/mailcatcher
+    restart: always
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    environment:
+      MAILCATCHER_PORT: 1025
   memcached:
     image: memcached:latest
     restart: always
@@ -28,6 +36,7 @@ services:
   phpfpm:
     depends_on:
       - mysql
+      - mailcatcher
       - memcached
       - elasticsearch
     volumes:
