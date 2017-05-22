@@ -84,6 +84,19 @@ This alias lets you run `dcbash` to SSH into the PHP/WordPress container.
 
 Alternatively, there is a script in the `/bin` directory that allows you to SSH in to the environment from the project directory directly: `./bin/ssh`.
 
+## MailCatcher
+
+MailCatcher runs a simple local SMTP server which catches any message sent to it, and displays it in it's built-in web interface. MailCatcher will not catch emails from a WordPress install unless WordPress's SMTP settings have been set to point to MailCatcher. [Multiple free plugins](https://wordpress.org/plugins/search/smtp/) are available on WordPress.org that make it easy to change WordPress's SMTP settings. The following settings should be added to the solution used to modify WordPress's SMTP Settings:
+
+```
+SMTP Host: yourlocalurl.tld or 0.0.0.0
+SMTP Port: 1025
+Encryption: No Encryption
+Authentication: Username and Password not required
+```
+
+To view the MailCatcher web interface, navigate to `http://yourlocalurl.tld:1080` or `http://0.0.0.0:1080` in your web browser of choice.
+
 ## Credits
 
 This project is our own flavor of an environment created by John Bloch.
