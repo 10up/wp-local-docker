@@ -17,7 +17,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 * [Docker](https://www.docker.com/)
 * [docker-compose](https://docs.docker.com/compose/)
 
-## Setup Docker
+## Setup a Docker Container
 
 1. `git clone git@github.com:10up/wp-docker.git <my-project-name>`
 1. `cd <my-project-name>`
