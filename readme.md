@@ -84,6 +84,10 @@ This alias lets you run `dcbash` to SSH into the PHP/WordPress container.
 
 Alternatively, there is a script in the `/bin` directory that allows you to SSH in to the environment from the project directory directly: `./bin/ssh`.
 
+## PHPMyAdmin
+
+PHPMyAdmin can be accessed via port 8181. When running the defaults  it should be accessible via ```localhost:8181``` or ```docker-local.dev:8181```
+
 ## Credits
 
 This project is our own flavor of an environment created by John Bloch.
