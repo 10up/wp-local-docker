@@ -10,6 +10,10 @@ RUN apt-get update && \
 	apt-get install -y libxml2-dev && \
 	docker-php-ext-install soap
 
+RUN apt-get update && \
+	apt-get install -y ssmtp && \
+	echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
+
 CMD ["php-fpm"]
 
 EXPOSE 9000
