@@ -90,7 +90,7 @@ MailCatcher runs a simple local SMTP server which catches any message sent to it
 
 ## Xdebug
 
-Xdebug is configured to run in remote debugging mode for Mac and Linux setups. If you are running Windows, replace the IP address on `config/php-fpm/docker-php-ext-xdebug.ini` to the IP address of your Network Bridge Adapter.
+Xdebug is configured to run in remote debugging mode for Mac and Linux setups. If you are running Windows, replace the IP address on `config/php-fpm/docker-php-ext-xdebug.ini` with the IP of your Network Bridge Adapter.
 
 ### Debugging
 
