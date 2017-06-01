@@ -88,6 +88,17 @@ Alternatively, there is a script in the `/bin` directory that allows you to SSH 
 
 MailCatcher runs a simple local SMTP server which catches any message sent to it, and displays it in it's built-in web interface. All emails sent by WordPress will be intercepted by MailCatcher. To view emails in the MailCatcher web interface, navigate to `http://localhost:1080` in your web browser of choice.
 
+## Xdebug
+
+Xdebug is configured to run in remote debugging mode for Mac and Linux setups. If you are running Windows, replace the IP address on `config/php-fpm/docker-php-ext-xdebug.ini` with the IP of your Network Bridge Adapter.
+
+### Debugging
+
+1. Install the Xdebug helper Chrome Extension
+1. Click the Xdebug helper icon and select "Debug"
+1. Tell your IDE to listen to external Debug Connections
+    1. On PHPStorm:  Run > Start Listening to PHP Debug Connections
+
 ## Credits
 
 This project is our own flavor of an environment created by John Bloch.
