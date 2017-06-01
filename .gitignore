@@ -32,6 +32,10 @@ config.codekit
 
 /data/*
 !/data/.gitkeep
+
+/logs/*
+!/logs/.gitkeep
+
 docker-compose.override.yml
 
 notes.md
