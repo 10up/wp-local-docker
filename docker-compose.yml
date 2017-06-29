@@ -51,8 +51,10 @@ services:
       - phpfpm
     ports:
       - "80:80"
+      - "443:443"
     image: nginx:latest
     volumes:
       - "./wordpress:/var/www/html"
       - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./config/certs:/etc/nginx/certs"
     restart: always
