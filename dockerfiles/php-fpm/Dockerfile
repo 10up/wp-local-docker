@@ -15,9 +15,10 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install soap
 RUN echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
 
-# Uncomment the line below if you're on a linux host
-# replace {USER_ID} with your regular user id: $ id -u $USER
-# replace {USER_NAME} with your regular user name: $ echo $USER
+# If you're on a linux host, open a terminal window and run
+# $ bin/linux-info.sh
+#
+# Uncomment the line below and replace {USER_ID} and {USER_NAME} with the values returned
 # RUN useradd -s /bin/bash -u {USER_ID} -G $(id -g www-data) {USER_NAME}
 
 CMD ["php-fpm"]
