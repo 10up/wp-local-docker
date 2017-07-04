@@ -15,11 +15,13 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install soap
 RUN echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
 
-# If you're on a linux host, open a terminal window and run
-# $ bin/linux-info.sh
-#
-# Uncomment the line below and replace {USER_ID} and {USER_NAME} with the values returned
-# RUN useradd -s /bin/bash -u {USER_ID} -G $(id -g www-data) {USER_NAME}
+# Create users determined on docker-compose.yml
+ARG WP_DOCKER_USER
+ARG WP_DOCKER_UID
+
+RUN if [ ! -z ${WP_DOCKER_UID} ] && [ ! -z ${WP_DOCKER_USER} ]; then \
+        useradd -s /bin/bash -u ${WP_DOCKER_UID} -G $(id -g www-data) ${WP_DOCKER_USER}; \
+    fi;
 
 CMD ["php-fpm"]
 

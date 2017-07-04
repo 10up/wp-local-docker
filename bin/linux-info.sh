@@ -1,5 +1,30 @@
 #!/bin/bash
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -p )
 
-echo "Your current user is $USER and your current user ID is $(id -u $USER)";
-#WWWDATAID=$(docker-compose exec --user root phpfpm bash -c "id -g www-data");
-#echo "The www-data folder inside the container has the ID $WWWDATAID";
+cd "$parent_path"
+
+if [ ! -f docker-compose.override.yml ]; then
+
+echo "version: '3'
+services:
+  phpfpm:
+    build:
+      args:
+        WP_DOCKER_USER: $USER
+        WP_DOCKER_UID: $(id -u $USER)" | dd of=docker-compose.override.yml;
+
+echo "docker-compose.override.yml file created";
+
+else
+
+echo "to configure wp-local-docker on a linux host, modify your docker-compose.override.yml file to include this bit:";
+
+echo "
+phpfpm:
+  build:
+    args:
+      WP_DOCKER_USER: $USER
+      WP_DOCKER_UID: $(id -u $USER)";
+
+fi;
+
