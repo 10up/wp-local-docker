@@ -73,6 +73,8 @@ Instead of running a command like `wp plugin install` you instead run `dcwp plug
 
 There is also a script in the `/bin` directory that will allow you to execute WP CLI from the project directory directly: `./bin/wp plugin install`.
 
+If you're running a Linux host, use `$USER:www-data` to run commands as your user.
+
 ## SSH Access
 
 You can easily access the WordPress/PHP container with `docker-compose exec`. Here's a simple alias to add to your `~/.bash_profile`:
