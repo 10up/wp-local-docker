@@ -1,5 +1,7 @@
 #!/bin/bash
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -p )
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P )
+export WP_DOCKER_USER=$USER
+export WP_DOCKER_UID=$(id -u $USER)
 
 cd "$parent_path"
 
@@ -10,8 +12,8 @@ services:
   phpfpm:
     build:
       args:
-        WP_DOCKER_USER: $USER
-        WP_DOCKER_UID: $(id -u $USER)" | dd of=docker-compose.override.yml;
+        WP_DOCKER_USER: $WP_DOCKER_USER
+        WP_DOCKER_UID: $WP_DOCKER_UID" | dd of=docker-compose.override.yml;
 
 echo "docker-compose.override.yml file created";
 
@@ -23,8 +25,10 @@ echo "
 phpfpm:
   build:
     args:
-      WP_DOCKER_USER: $USER
-      WP_DOCKER_UID: $(id -u $USER)";
+      WP_DOCKER_USER: $WP_DOCKER_USER
+      WP_DOCKER_UID: $WP_DOCKER_UID";
 
 fi;
+
+cd ..
 
