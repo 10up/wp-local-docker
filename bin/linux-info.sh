@@ -1,5 +1,5 @@
 #!/bin/bash
-# move into the bin/ folder
+# move into the bin folder
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P )
 cd "$parent_path"
 
@@ -11,7 +11,7 @@ export WP_DOCKER_UID=$(id -u $USER)
 # with the build arguments.
 # If the file already exists print the needed arguments so
 # the user can update it properly.
-if [ ! -f docker-compose.override.yml ]; then
+if [ ! -f ../docker-compose.override.yml ]; then
 
 echo "version: '3'
 services:
@@ -19,13 +19,15 @@ services:
     build:
       args:
         WP_DOCKER_USER: $WP_DOCKER_USER
-        WP_DOCKER_UID: $WP_DOCKER_UID" | dd of=docker-compose.override.yml;
+        WP_DOCKER_UID: $WP_DOCKER_UID" | dd of=../docker-compose.override.yml;
 
-echo "docker-compose.override.yml file created";
+echo "The docker-compose.override.yml file was created";
 
 else
 
-echo "to configure wp-local-docker on a linux host, modify your docker-compose.override.yml file to include this bit:";
+echo "It looks like you already have a docker-compose.override.yml file.
+To configure wp-local-docker properly on a linux host, please modify it
+to include these instructions:";
 
 echo "phpfpm:
   build:
@@ -35,6 +37,6 @@ echo "phpfpm:
 
 fi;
 
-# move back into parent folder
-cd ..
+# move back where we were
+cd -
 
