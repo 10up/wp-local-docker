@@ -34,6 +34,7 @@ services:
       - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
       - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
   phpfpm:
+    image: 10up/phpfpm
     depends_on:
       - mysql
       - memcached
@@ -43,7 +44,6 @@ services:
       - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
       - "./config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
     restart: always
-    build: ./dockerfiles/php-fpm
     extra_hosts:
       - "docker-local.dev:172.18.0.1"
   nginx:
