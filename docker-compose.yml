@@ -12,6 +12,13 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: password
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin:latest
+      restart: always
+      ports:
+        - 8080:80
+      environment:
+        PMA_ARBITRARY: 1
   mailcatcher:
      image: schickling/mailcatcher
      restart: always
