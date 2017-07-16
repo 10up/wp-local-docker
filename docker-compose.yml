@@ -12,6 +12,18 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: password
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_ARBITRARY: 1 # when set to 1 connection to the arbitrary server will be allowed
+      PMA_HOST: "mysql"
+      PMA_USER: "root"
+      PMA_PASSWORD: "password"
   mailcatcher:
      image: schickling/mailcatcher
      restart: always
