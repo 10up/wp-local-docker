@@ -59,6 +59,17 @@ services:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
 ```
 
+## Xdebug
+
+Add the following lines to `docker-php-ext-xdebug.ini` in order to use Xdebug.
+
+```
+xdebug.remote_enable = 1
+xdebug.remote_host = {YOU_LOCAL_IP_ADDRESS}
+```
+
+Don't use `127.0.0.1` as local IP address.
+
 ## WP-CLI
 
 Add this alias to `~/.bash_profile` to easily run WP-CLI command.
