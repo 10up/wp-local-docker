@@ -61,7 +61,7 @@ services:
 
 ## Xdebug
 
-Add the following lines to `docker-php-ext-xdebug.ini` in order to use Xdebug.
+Add the following lines to `docker-php-ext-xdebug.ini` in order to use remote Xdebugging with your IDE.
 
 ```
 xdebug.remote_enable = 1
@@ -69,6 +69,12 @@ xdebug.remote_host = {YOU_LOCAL_IP_ADDRESS}
 ```
 
 Don't use `127.0.0.1` as local IP address.
+
+From Docker CE 17.06, you should be able to use one of these addresses (noted as experimental in Docker CE 17.06):
+
+- On Mac: `xdebug.remote_host = docker.for.mac.localhost`
+- On Windows: `xdebug.remote_host = docker.for.win.localhost`
+
 
 ## WP-CLI
 
