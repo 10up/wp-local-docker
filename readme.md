@@ -8,7 +8,7 @@ This project is based on [docker-compose](https://docs.docker.com/compose/). By 
 
 You can directly edit PHP, nginx, and Elasticsearch configuration files from within the repo as they are mapped to the correct locations in containers.
 
-A `Dockerfile` is included for PHP-FPM (`/dockerfiles/php-fpm/Dockerfile`). This adds a few extra things to the PHP-FPM image.
+A [custom phpfpm image](https://github.com/10up/phpfpm-image) is used for this environment that adds a few extra things to the PHP-FPM image.
 
 The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in the Elasticsearch container. You can drop Elasticsearch plugins in this folder to have them installed within the container.
 
@@ -19,7 +19,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 ## Setup
 
-1. `git clone git@github.com:10up/wp-local-docker.git <my-project-name>`
+1. `git clone https://github.com/10up/wp-local-docker.git <my-project-name>`
 1. `cd <my-project-name>`
     1. On Linux hosts, first run `sh bin/linux-info.sh`, to create/modify your `docker-compose.override.yml` file before proceeding
 1. `docker-compose up`
@@ -50,7 +50,7 @@ Adding a `docker-compose.override.yml` file alongside the `docker-compose.yml` f
 the following, allows you to change the domain associated with the cluster while retaining the ability to pull in changes from the repo.
 
 ```
-version: '2'
+version: '3'
 services:
   phpfpm:
     extra_hosts:
