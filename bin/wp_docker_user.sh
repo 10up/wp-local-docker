@@ -9,16 +9,16 @@ wp_docker_user() {
     cd "$parent_path"
     cd ..
 
+    WP_DOCKER_USER="www-data"
+
     # read user from file
     if [ -f docker-compose.override.yml ]; then
-        WP_DOCKER_USER="$(grep WP_DOCKER_USER docker-compose.override.yml | tr -d '[:space:]' | tr -d 'WP_DOCKER_USER:')"
+        OVERRIDE_USER="$(grep WP_DOCKER_USER docker-compose.override.yml | tr -d '[:space:]' | tr -d 'WP_DOCKER_USER:')"
 
         # If the information is invalid or non-existent, fallback to the www-data user
-        if [ -z $WP_DOCKER_USER ]; then
-          WP_DOCKER_USER="www-data"
+        if [ -n "$OVERRIDE_USER" ]; then
+          WP_DOCKER_USER=$OVERRIDE_USER;
         fi;
-    else
-        WP_DOCKER_USER="www-data"
     fi;
 
     echo $WP_DOCKER_USER
