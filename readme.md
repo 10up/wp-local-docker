@@ -19,7 +19,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 ## Setup
 
-1. `git clone git@github.com:10up/wp-local-docker.git <my-project-name>`
+1. `git clone https://github.com/10up/wp-local-docker.git <my-project-name>`
 1. `cd <my-project-name>`
 1. `docker-compose up`
 1. Run setup to download WordPress and create a `wp-config.php` file.
