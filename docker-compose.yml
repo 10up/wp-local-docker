@@ -57,4 +57,5 @@ services:
       - "./wordpress:/var/www/html"
       - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
       - "./config/certs:/etc/nginx/certs"
+      - "./logs/nginx:/var/log/nginx"
     restart: always
