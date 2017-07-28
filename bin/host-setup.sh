@@ -16,10 +16,13 @@ if [ ! -f ../docker-compose.override.yml ]; then
 echo "version: '3'
 services:
   phpfpm:
-    build:
-      args:
-        WP_DOCKER_USER: $WP_DOCKER_USER
-        WP_DOCKER_UID: $WP_DOCKER_UID" | dd of=../docker-compose.override.yml;
+    volumes:
+      - "./bin/container-setup.sh:/usr/local/bin/container-setup.sh"
+    command:
+      - container-setup.sh
+    environment:
+      WP_DOCKER_USER: $WP_DOCKER_USER
+      WP_DOCKER_UID: $WP_DOCKER_UID" | dd of=../docker-compose.override.yml;
 
 echo "The docker-compose.override.yml file was created";
 
@@ -30,10 +33,9 @@ To configure wp-local-docker properly on a linux host, please modify it
 to include these instructions:";
 
 echo "phpfpm:
-  build:
-    args:
-      WP_DOCKER_USER: $WP_DOCKER_USER
-      WP_DOCKER_UID: $WP_DOCKER_UID";
+  environment:
+    WP_DOCKER_USER: $WP_DOCKER_USER
+    WP_DOCKER_UID: $WP_DOCKER_UID";
 
 fi;
 
