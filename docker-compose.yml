@@ -24,7 +24,7 @@ services:
     image: memcached:latest
     restart: always
   elasticsearch:
-    image: elasticsearch:5
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
     restart: always
     environment:
       ES_JAVA_OPTS: "-Xms750m -Xmx750m"
