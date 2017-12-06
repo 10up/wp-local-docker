@@ -43,6 +43,7 @@ services:
       - "./wordpress:/var/www/html"
       - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
       - "./config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+      - ~/.ssh:/root/.ssh
     restart: always
     extra_hosts:
       - "docker-local.dev:172.18.0.1"
