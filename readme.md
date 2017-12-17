@@ -25,8 +25,10 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 1. Run setup to download WordPress and create a `wp-config.php` file.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
 	2. On Windows, run `./bin/setup`.
-1. Navigate to `http://localhost` in a browser to finish WordPress setup.
-	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your hosts file. Ex: `127.0.0.1 docker.dev`
+
+If you want to use a domain other than `http://localhost`, you'll need to:
+1. Add an entry to your hosts file. Ex: `127.0.0.1 docker.dev`
+1. Update _WordPress Address (URL)_ and _Site Address (URL)_.
 
 Default MySQL connection information (from within PHP-FPM container):
 
