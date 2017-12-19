@@ -32,7 +32,7 @@ if exist "./wordpress/wp-config.php" (
 	docker-compose exec --user www-data phpfpm wp widget delete meta-2
 
 	REM Install additional plugins
-	docker-compose exec --user www-data phpfpm wp plugin install developer
+	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
 
 	echo "Installation done."
 	start "" http://localhost/wp-login.php

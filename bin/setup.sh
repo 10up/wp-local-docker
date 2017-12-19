@@ -6,7 +6,7 @@ then
 else
 	echo "WordPress config file not found. Installing..."
 	docker-compose exec --user www-data phpfpm wp core download
-	docker-compose exec --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
+	docker-compose exec -T --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
 
 	# Install WordPress
 	docker-compose exec --user www-data phpfpm wp db create
@@ -33,7 +33,7 @@ else
 	docker-compose exec --user www-data phpfpm wp widget delete meta-2
 
 	# Install additional plugins
-	docker-compose exec --user www-data phpfpm wp plugin install developer
+	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
 
 	echo "Installation done."
 	open http://localhost/wp-login.php
