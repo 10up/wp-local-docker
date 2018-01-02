@@ -97,21 +97,20 @@ Kudos to [10up's](https://github.com/10up/wp-local-docker).
 
 | Setup/Build                         | Status |  Notes  |
 |-------------------------------------|:------:|---------|
-| Custom URLs                         |        |         |
-| WordPress Multisite install         |        |         |
+| Initial Fork                        |    X   |         |
+| Add phpmyadmin image                |    X   |         |
+| Add xdebug instructions to vscode   |    X   |         |
+| Add Custom URLs support             |        |         |
+| Add WordPress Multisite install     |        |         |
 | Add Genesis Starter-Theme           |        |         |
-| Dependencies composition            |        |         |
-|                                     |        |         |
-|                                     |        |         |
-|                                     |        |         |
-|                                     |        |         |
+| Run Dependencies composition        |        |         |
+| Add editorconfig file               |        |         |
+| Add eslint configurations           |        |         |
+| Add phpcslint configuration         |        |         |
+
 
 
 | Deploy                              | Status |  Notes  |
 |-------------------------------------|:------:|---------|
 | As a container                      |        |         |
-| Without Dev-Environment             |        |         |
-|                                     |        |         |
-|                                     |        |         |
-|                                     |        |         |
-|                                     |        |         |
+| Without Docker Environment          |        |         |
