@@ -1,0 +1,161 @@
+// Site Navigation
+
+.genesis-nav-menu {
+  clear: both;
+  font-size: $menu-font-size;
+  line-height: $menu-line-height;
+  text-align: center;
+  width: 100%;
+
+  @include susy-breakpoint($breakpoint-l) {
+    text-align: left;
+  }
+
+  .menu-item {
+    display: inline-block;
+    text-align: left;
+
+    &:hover {
+      position: static;
+
+      > .sub-menu {
+        left: auto;
+        opacity: 1;
+      }
+    }
+  }
+
+  a {
+    color: $menu-color;
+    display: block;
+    padding: 30px 24px;
+    text-decoration: none;
+
+    &:hover,
+    .current-menu-item > &,
+    .sub-menu .current-menu-item > &:hover {
+      color: $menu-active-color;
+      text-decoration: $link-decoration;
+    }
+  }
+
+  .sub-menu {
+    left: -9999px;
+    opacity: 0;
+    position: absolute;
+    transition: opacity .4s ease-in-out;
+    width: 200px;
+    z-index: 99;
+
+    a {
+      background-color: $menu-background-color;
+      border: $menu-border;
+      border-top: 0;
+      font-size: $menu-font-size * .9;
+      padding: 20px 16px;
+      position: relative;
+      width: 200px;
+
+      @include susy-breakpoint($breakpoint-l) {
+        padding: 20px;
+      }
+    }
+
+    .sub-menu {
+      margin: -55px 0 0 199px;
+    }
+  }
+
+  .last {
+    float: none;
+
+    @include susy-breakpoint($breakpoint-l) {
+      float: right;
+    }
+  }
+
+  > .first > a {
+    @include susy-breakpoint($breakpoint-l) {
+      padding-left: 0;
+    }
+  }
+
+  > .last > a {
+    @include susy-breakpoint($breakpoint-l) {
+      padding-right: 0;
+    }
+  }
+
+  .right {
+    display: none;
+
+    @include susy-breakpoint($breakpoint-l) {
+      display: inline-block;
+      float: right;
+    }
+  }
+
+  > .right {
+    color: $menu-background-color;
+    list-style-type: none;
+    padding: 30px 0;
+  }
+
+  > .right > a {
+    display: inline;
+    padding: 0;
+  }
+
+  > .rss > a {
+    margin-left: 48px;
+  }
+
+  > .search {
+    padding: 10px 0 0;
+  }
+
+}
+
+// Site Header Navigation
+
+.site-header {
+  .sub-menu {
+    border-top: $menu-border;
+
+    .sub-menu {
+      margin-top: -56px;
+    }
+  }
+
+  .genesis-nav-menu li li {
+    margin-left: 0;
+  }
+}
+
+// Primary Navigation
+
+.nav-primary {
+  background-color: $menu-color;
+
+  .genesis-nav-menu {
+    a {
+      color: $menu-background-color;
+    }
+
+    .sub-menu a {
+      color: $menu-color;
+    }
+
+    a:hover,
+    .current-menu-item > a,
+    .sub-menu .current-menu-item > a:hover {
+      color: $menu-active-color;
+    }
+  }
+}
+
+// Secondary Navigation
+
+.nav-secondary {
+  background-color: $menu-background-color;
+}

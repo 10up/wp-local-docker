@@ -1,0 +1,28 @@
+{
+  "description": "Genesis Child Theme",
+  "license": "SEE LICENSE IN LICENSE",
+  "browser": {},
+  "repository": {},
+  "browserify": {
+    "transform": [
+      "envify",
+      "babelify",
+      "browserify-shim",
+      "aliasify",
+      "browserify-data"
+    ]
+  },
+  "aliasify": {
+    "aliases": {
+      "underscore": "lodash"
+    }
+  },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "scripts": {
+    "build": "gulp build"
+  }
+}

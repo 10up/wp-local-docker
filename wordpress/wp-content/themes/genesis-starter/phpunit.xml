@@ -1,0 +1,19 @@
+<phpunit
+  bootstrap="test/phpunit/bootstrap.php"
+  backupGlobals="false"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  >
+  <testsuites>
+    <testsuite>
+      <directory suffix=".test.php">./test/phpunit/</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <blacklist>
+        <directory suffix=".php">./vendor/</directory>
+    </blacklist>
+  </filter>
+</phpunit>

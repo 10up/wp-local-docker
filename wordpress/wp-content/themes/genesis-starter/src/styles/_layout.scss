@@ -1,0 +1,188 @@
+// Structure and Layout
+
+// Site Containers
+
+.site-inner,
+.wrap {
+  @include container($breakpoint-m);
+  padding: gutter();
+
+  @include susy-breakpoint($breakpoint-l) {
+    @include container($breakpoint-l);
+    padding: 0;
+  }
+
+  @include susy-breakpoint($breakpoint-xl) {
+    @include container($breakpoint-xl);
+    padding: 0;
+  }
+}
+
+.site-inner {
+  padding-top: 40px;
+}
+
+// Layouts
+
+.content-sidebar,
+.sidebar-content,
+.content-sidebar-sidebar,
+.sidebar-content-sidebar,
+.sidebar-sidebar-content {
+  .content-sidebar-wrap {
+    @include span(full);
+
+    .content { @include span(full); }
+    .sidebar-primary { @include span(full); }
+  }
+  .sidebar-secondary { @include span(full); }
+}
+
+.content-sidebar {
+  @include susy-breakpoint($breakpoint-l) {
+    .content-sidebar-wrap {
+      .content { @include span(8 of 12); }
+      .sidebar-primary { @include span(4 of 12 last); }
+    }
+  }
+}
+
+.sidebar-content {
+  @include susy-breakpoint($breakpoint-l) {
+    .content-sidebar-wrap {
+      .sidebar-primary { @include span(4 of 12); }
+      .content { @include span(8 of 12 last); }
+    }
+  }
+}
+
+.content-sidebar-sidebar {
+  @include susy-breakpoint($breakpoint-l) {
+    .content-sidebar-wrap {
+      @include span(full);
+
+      .content { @include span(8 of 12); }
+      .sidebar-primary { @include span(4 of 12 last); }
+    }
+    .sidebar-secondary { @include span(full); }
+  }
+
+  @include susy-breakpoint($breakpoint-xl) {
+    .content-sidebar-wrap {
+      @include span(10 of 12 nest);
+
+      .content { @include span(7 of 10); }
+      .sidebar-primary { @include span(3 of 10 last); }
+    }
+    .sidebar-secondary { @include span(2 of 12 last); }
+  }
+}
+
+.sidebar-content-sidebar {
+  @include susy-breakpoint($breakpoint-l) {
+    .content-sidebar-wrap {
+      @include span(full);
+
+      .content { @include span(8 of 12); }
+      .sidebar-primary { @include span(4 of 12 last); }
+    }
+    .sidebar-secondary { @include span(full); }
+  }
+
+  @include susy-breakpoint($breakpoint-xl) {
+    .sidebar-secondary { @include span(2 of 12); }
+    .content-sidebar-wrap {
+      @include span(10 of 12 nest last);
+
+      .content { @include span(7 of 10); }
+      .sidebar-primary { @include span(3 of 10 last); }
+    }
+  }
+}
+
+.sidebar-sidebar-content {
+  @include susy-breakpoint($breakpoint-l) {
+    .content-sidebar-wrap {
+      @include span(full);
+
+      .sidebar-primary { @include span(4 of 12); }
+      .content { @include span(8 of 12 last); }
+    }
+    .sidebar-secondary { @include span(full); }
+  }
+
+  @include susy-breakpoint($breakpoint-xl) {
+    .sidebar-secondary { @include span(2 of 12); }
+    .content-sidebar-wrap {
+      @include span(10 of 12 nest last);
+
+      .sidebar-primary { @include span(3 of 10); }
+      .content { @include span(7 of 10 last); }
+    }
+  }
+}
+
+.full-width-content {
+  .content { @include span(full); }
+}
+
+// Column Classes
+
+.first { @include first; }
+.last { @include last; }
+
+.one-half,
+.two-fourths,
+.three-sixths,
+.one-third,
+.two-sixths,
+.two-thirds,
+.four-sixths,
+.one-fourth,
+.three-fourths,
+.one-sixth,
+.five-sixths {
+  @include span(full);
+
+  &.first {
+    @include bs-first;
+  }
+
+  &.last {
+    @include bs-last;
+  }
+}
+
+@include susy-breakpoint($breakpoint-l) {
+  .one-half,
+  .two-fourths,
+  .three-sixths {
+    @include bs-span(6 of 12);
+  }
+
+  .one-third,
+  .two-sixths {
+    @include bs-span(4 of 12);
+  }
+
+  .two-thirds,
+  .four-sixths, {
+    @include bs-span(8 of 12);
+  }
+
+  .one-fourth {
+    @include bs-span(3 of 12);
+  }
+
+  .three-fourths {
+    @include bs-span(9 of 12);
+  }
+
+  .one-sixth {
+    @include bs-span(2 of 12);
+  }
+
+  .five-sixths {
+    @include bs-span(10 of 12);
+  }
+}
