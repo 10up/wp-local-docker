@@ -1,12 +1,24 @@
 version: '3'
 services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    restart: always
+    ports:
+      - 8181:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: password
+      PMA_HOST: mysql
+      PMA_PORT: 3306
   mysql:
     image: mysql:latest
     volumes:
       - "./data/db:/var/lib/mysql"
     restart: always
     ports:
-      - "3306:3306"
+      - "3333:3333"
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: wordpress
