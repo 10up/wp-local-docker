@@ -1,0 +1,173 @@
+# Windows
+*.swp
+Thumbs.db
+
+# OS X
+._*
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+
+# Logs and Backups
+/log/
+/logs/
+/wc-logs/
+*.bak
+*.log
+
+# VCS
+.git/
+.svn/
+.cvs/
+.gitmodules
+
+# Dependencies
+node_modules/
+
+# This file is PHP 5.6 and fails syntax checks on WP Engine: (edit: WP Engine already supports PHP 5.6)
+# vendor/composer/autoload_static.php
+
+# Development
+/.scripts
+.editorconfig
+.jscsrc
+.phpcs.xml
+README.md
+vvv-*
+
+# Builds
+/.deploy_*/
+/tmp
+
+# Web Server
+.htaccess
+.htpasswd
+
+# Sitemap
+sitemap.xml
+sitemap.xml.gz
+
+# WordPress
+/wp-content/backup-db/
+/wp-content/blogs.dir/
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/uploads/
+/wp-content/w3tc-config/
+
+# WordPress Core
+/wp-admin/
+/wp-includes/
+/wp-content/advanced-cache.php
+/wp-content/db.php
+/wp-content/index.php
+/wp-content/object-cache.php
+/index.php
+/license.txt
+/readme.html
+/wp-activate.php
+/wp-blog-header.php
+/wp-comments-post.php
+/wp-config.php
+/wp-config-sample.php
+/wp-cron.php
+/wp-links-opml.php
+/wp-load.php
+/wp-login.php
+/wp-mail.php
+/wp-settings.php
+/wp-signup.php
+/wp-trackback.php
+/xmlrpc.php
+
+# WordPress Themes
+/wp-content/themes/twentyten/
+/wp-content/themes/twentyeleven/
+/wp-content/themes/twentytwelve/
+/wp-content/themes/twentythirteen/
+/wp-content/themes/twentyfourteen/
+/wp-content/themes/twentyfifteen/
+/wp-content/themes/index.php
+
+# WordPress Plugins
+/wp-content/plugins/hello.php
+/wp-content/plugins/index.php
+
+# WordPress Plugins (Development)
+/wp-content/mu-plugins/index.php
+/wp-content/mu-plugins/load-wp-performance-profiler.php
+/wp-content/mu-plugins/p3-profiler.php
+/wp-content/mu-plugins/wp-performance-profiler
+/wp-content/plugins/any-hostname
+/wp-content/plugins/debug-bar
+/wp-content/plugins/debug-bar-*
+/wp-content/plugins/developer
+/wp-content/plugins/genesis-visual-hook-guide
+/wp-content/plugins/laps
+/wp-content/plugins/log-deprecated-notices
+/wp-content/plugins/log-viewer
+/wp-content/plugins/monster-widget
+/wp-content/plugins/p3-profiler
+/wp-content/plugins/piglatin
+/wp-content/plugins/query-monitor
+/wp-content/plugins/rewrite-rules-inspector
+/wp-content/plugins/rtl-tester
+/wp-content/plugins/simply-show-ids
+/wp-content/plugins/theme-check
+/wp-content/plugins/uploads-by-proxy
+/wp-content/plugins/what-the-file
+/wp-content/plugins/wordpress-beta-tester
+/wp-content/plugins/wp-crontrol
+/wp-content/plugins/wp-performance-profiler
+/wp-content/plugins/wpml-theme-tester
+
+# Disallowed Plugins
+/wp-content/plugins/batcache
+/wp-content/plugins/blogger-importer
+/wp-content/plugins/hello.php
+/wp-content/plugins/memcached
+/wp-content/plugins/tumblr-importer
+/wp-content/plugins/w3-total-cache
+/wp-content/plugins/wp-db-backup
+/wp-content/plugins/wp-fastest-cache
+/wp-content/plugins/wp-file-cache
+/wp-content/plugins/wp-performance-pack
+/wp-content/plugins/wp-redis
+/wp-content/plugins/wp-super-cache
+/wp-content/plugins/wp-hydra
+
+# Media Files
+*.3gp
+*.3gpp
+*.asf
+*.asx
+*.avi
+*.bin
+*.deb
+*.dll
+*.dmg
+*.exe
+*.flv
+*.hqx
+*.img
+*.iso
+*.kar
+*.m4a
+*.m4v
+*.mid
+*.midi
+*.mng
+*.mov
+*.mp3
+*.mp4
+*.mpeg
+*.mpg
+*.msi
+*.msm
+*.msp
+*.ogg
+*.ra
+*.webm
+*.wmv

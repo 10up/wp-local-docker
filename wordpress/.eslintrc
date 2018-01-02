@@ -1,0 +1,26 @@
+{
+  "preset": "airbnb",
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "env": {
+    "browser": true,
+    "jasmine": true,
+    "node": false
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
+    "quotes": [2, "single"],
+    "strict": [2, "never"],
+    "no-unexpected-multiline": 2,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 2
+  },
+  "plugins": [
+    "babel",
+    "react"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "presets": [
+    "react",
+    "stage-3",
+    "es2015"
+  ],
+  "plugins": [
+    "transform-object-assign",
+    "transform-runtime"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        ["react-transform", {
+          "transforms": [
+            {
+              "transform": "react-transform-hmr",
+              "imports": ["react"],
+              "locals": ["module"]
+            }, {
+              "transform": "react-transform-catch-errors",
+              "imports": ["react", "redbox-react"]
+            }
+          ]
+        }],
+        "transform-object-assign",
+        "transform-runtime"
+      ]
+    },
+    "production": {
+      "plugins": [
+        "transform-object-assign",
+        "transform-runtime"
+      ]
+    }
+  }
+}
