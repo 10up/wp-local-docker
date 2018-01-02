@@ -20,14 +20,17 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 ## Setup
 
-1. `git clone https://github.com/log-oscon/wp-local-docker.git <my-project-name>`
-1. `cd <my-project-name>`
-1. `docker-compose up`
-1. Run setup to download WordPress and create a `wp-config.php` file.
+1. Add a custom URL to your hosts file.
+    1. On Linux / Unix / OSX, the file is found at `/private/etc/hosts`
+    2. `127.0.0.1  docker-local.dev`
+2. `git clone https://github.com/log-oscon/wp-local-docker.git <my-project-name>`
+3. `cd <my-project-name>`
+4. `docker-compose up`
+5. Edit `setup.sh` to declare single or multisite install
+    1. `SINGLE_SITE=0` (single site)
+    2. `SINGLE_SITE=1` (multisite site)
+6. Run setup to download WordPress and create a `wp-config.php` file.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
-	2. On Windows, run `./bin/setup`.
-1. Navigate to `http://localhost` in a browser to finish WordPress setup.
-	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your hosts file. Ex: `127.0.0.1 docker.dev`
 
 Default MySQL connection information (from within PHP-FPM container):
 
