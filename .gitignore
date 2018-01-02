@@ -28,6 +28,8 @@ scss-lint-report.xml
 config.codekit
 
 /wordpress/*
+!/wordpress/composer.json
+!/wordpress/package.json
 !/wordpress/wp-content/mu-plugins/autoload.php
 !/wordpress/wp-content/mu-plugins/fix-annoyances.php
 !/wordpress/wp-content/mu-plugins/https.php
