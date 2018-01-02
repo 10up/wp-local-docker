@@ -103,15 +103,16 @@ Kudos to [10up](https://github.com/10up/wp-local-docker).
 | Initial Fork                        |    X   |         |
 | Add phpmyadmin image                |    X   |         |
 | Add xdebug instructions to vscode   |    X   |         |
-| Add Custom URLs support             |        |         |
-| Add WordPress Multisite install     |        |         |
-| Add Genesis Starter-Theme           |        |         |
-| Run Dependencies composition        |        |         |
+| Add Custom URLs support             |    X   |         |
+| Add WordPress Multisite install     |    X   |         |
+| Run Composer dependencies           |    X   |         |
+| Run NPM dependencies                |    X   |         |
+| Add Genesis Starter-Theme           |    X   |  [1]    |
 | Add editorconfig file               |        |         |
 | Add eslint configurations           |        |         |
 | Add phpcslint configuration         |        |         |
 
-
+[1] There is an issue while trying to run the `npm run build` script.
 
 | Deploy                              | Status |  Notes  |
 |-------------------------------------|:------:|---------|
