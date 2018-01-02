@@ -91,7 +91,7 @@ MailCatcher runs a simple local SMTP server which catches any message sent to it
 
 ## Credits
 
-Kudos to [10up's](https://github.com/10up/wp-local-docker).
+Kudos to [10up](https://github.com/10up/wp-local-docker).
 
 ## Roadmap
 
