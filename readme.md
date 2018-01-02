@@ -92,3 +92,26 @@ MailCatcher runs a simple local SMTP server which catches any message sent to it
 ## Credits
 
 Kudos to [10up's](https://github.com/10up/wp-local-docker).
+
+## Roadmap
+
+| Setup/Build                         | Status |  Notes  |
+|-------------------------------------|:------:|---------|
+| Custom URLs                         |        |         |
+| WordPress Multisite install         |        |         |
+| Add Genesis Starter-Theme           |        |         |
+| Dependencies composition            |        |         |
+|                                     |        |         |
+|                                     |        |         |
+|                                     |        |         |
+|                                     |        |         |
+
+
+| Deploy                              | Status |  Notes  |
+|-------------------------------------|:------:|---------|
+| As a container                      |        |         |
+| Without Dev-Environment             |        |         |
+|                                     |        |         |
+|                                     |        |         |
+|                                     |        |         |
+|                                     |        |         |
