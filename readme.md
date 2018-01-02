@@ -1,10 +1,11 @@
 # WordPress Docker Development Environment
 
-This is a Docker based local development environment for WordPress.
+This is a fork of the [10up's](https://github.com/10up/wp-local-docker) Docker based local development environment for WordPress.
+The purpose of this fork was to add some characteristics similar to the Vagrant development environment that is used at log.
 
 ## What's Inside
 
-This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MariaDB, Elasticsearch, nginx, and Memcached. The `/wordpress` directory is the web root which is mapped to the nginx container.
+This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MariaDB, Elasticsearch, nginx, Memcached and phpmyadmin. The `/wordpress` directory is the web root which is mapped to the nginx container.
 
 You can directly edit PHP, nginx, and Elasticsearch configuration files from within the repo as they are mapped to the correct locations in containers.
 
@@ -19,7 +20,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 ## Setup
 
-1. `git clone https://github.com/10up/wp-local-docker.git <my-project-name>`
+1. `git clone https://github.com/log-oscon/wp-local-docker.git <my-project-name>`
 1. `cd <my-project-name>`
 1. `docker-compose up`
 1. Run setup to download WordPress and create a `wp-config.php` file.
@@ -90,4 +91,4 @@ MailCatcher runs a simple local SMTP server which catches any message sent to it
 
 ## Credits
 
-This project is our own flavor of an environment created by John Bloch.
+Kudos to [10up's](https://github.com/10up/wp-local-docker).
