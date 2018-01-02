@@ -28,6 +28,10 @@ scss-lint-report.xml
 config.codekit
 
 /wordpress/*
+!/wordpress/wp-content/mu-plugins/autoload.php
+!/wordpress/wp-content/mu-plugins/fix-annoyances.php
+!/wordpress/wp-content/mu-plugins/https.php
+!/wordpress/wp-content/themes/genesis-starter/*
 !/wordpress/.gitkeep
 
 /data/*
