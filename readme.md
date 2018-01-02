@@ -108,9 +108,9 @@ Kudos to [10up](https://github.com/10up/wp-local-docker).
 | Run Composer dependencies           |    X   |         |
 | Run NPM dependencies                |    X   |         |
 | Add Genesis Starter-Theme           |    X   |  [1]    |
-| Add editorconfig file               |        |         |
-| Add eslint configurations           |        |         |
-| Add phpcslint configuration         |        |         |
+| Add editorconfig file               |    X   |         |
+| Add eslint configurations           |    X   |         |
+| Add phpcslint configuration         |    X   |         |
 
 [1] There is an issue while trying to run the `npm run build` script.
 
