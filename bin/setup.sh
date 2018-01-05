@@ -8,9 +8,25 @@ else
 	docker-compose exec --user www-data phpfpm wp core download
 	docker-compose exec -T --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
 
+	# Ask for the site name
+	echo -n "Enter the site title and press [ENTER]: "
+	read TITLE
+
+	# Ask for the user name
+	echo -n "Enter your username and press [ENTER]: "
+	read ADMIN_USER
+
+	# Ask for the user email
+	echo -n "Enter your email and press [ENTER]: "
+	read ADMIN_EMAIL
+
+	# Ask for the password
+	echo -n "Enter your password and press [ENTER]: "
+	read ADMIN_PASSWORD
+
 	# Install WordPress
 	docker-compose exec --user www-data phpfpm wp db create
-	docker-compose exec --user www-data phpfpm wp core install --url=localhost --prompt=title,admin_user,admin_email
+	docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email=$ADMIN_EMAIL --admin_password=$ADMIN_PASSWORD
 
 	# Adjust settings
 	docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
@@ -36,5 +52,8 @@ else
 	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
 
 	echo "Installation done."
+	echo "------------------"
+	echo "Username: $ADMIN_USER"
+	echo "Password: $ADMIN_PASSWORD"
 	open http://localhost/wp-login.php
 fi
