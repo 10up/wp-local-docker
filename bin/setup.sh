@@ -50,6 +50,8 @@ else
 
 	# Install additional plugins
 	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
+	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
+	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
 
 	echo "Installation done."
 	echo "------------------"
