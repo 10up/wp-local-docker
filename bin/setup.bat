@@ -5,7 +5,7 @@ if exist "./wordpress/wp-config.php" (
 ) else (
 	echo "WordPress config file not found. Installing..."
 	docker-compose exec --user www-data phpfpm wp core download
-	docker-compose exec --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
+	docker-compose exec --user www-data phpfpm wp core config
 
 	REM Ask for the site name
 	SET /P TITLE=[Enter the site title and press \[ENTER\]:]

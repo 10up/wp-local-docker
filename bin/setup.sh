@@ -6,7 +6,7 @@ then
 else
 	echo "WordPress config file not found. Installing..."
 	docker-compose exec --user www-data phpfpm wp core download
-	docker-compose exec -T --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
+	docker-compose exec -T --user www-data phpfpm wp core config
 
 	# Ask for the site name
 	echo -n "Enter the site title and press [ENTER]: "
