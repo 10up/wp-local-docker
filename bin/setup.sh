@@ -4,7 +4,6 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 TITLE="WP-Docker-Construct"
 ADMIN_EMAIL="engenharia@log.pt"
 URL="docker-local.dev"
-THEME="genesis-starter"
 SINGLE_SITE=1
 
 
@@ -13,21 +12,14 @@ echo "${TITLE}"
 echo "-----------------------------"
 
 ## PROJECT DEPENDENCIES ##
-echo "Building project dependencies..."
-
-cd "$ROOT/wordpress"
-echo " * Installing Composer dependencies..."
-composer install
-
-echo " * Installing NPM dependencies..."
-npm install
-
-echo " * Building theme..."
-cd "$ROOT/wp-content/themes/genesis-starter"
-composer install
-npm install
-npm run build
-
+echo "Searching for project build script..."
+if [ -f "./wordpress/.scripts/build.sh" ]; then
+	cd "$ROOT/wordpress"
+	echo " * Starting project build"
+	sh .scripts/build.sh
+else
+	echo " * No build (.scripts/build.sh) script found."
+fi
 
 ## WORDPRESS SETUP ##
 if [ -f "./wordpress/wp-config.php" ]; then
