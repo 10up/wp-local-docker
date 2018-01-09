@@ -23,7 +23,7 @@ echo " * Installing NPM dependencies..."
 npm install
 
 echo " * Building theme..."
-cd "$ROOT/wp-content/themes/genesis-starter"
+cd "$ROOT/wp-content/themes/$THEME"
 composer install
 npm install
 npm run build
