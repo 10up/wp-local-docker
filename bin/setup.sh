@@ -6,11 +6,17 @@ ADMIN_EMAIL="engenharia@log.pt"
 URL="docker-local.dev"
 THEME="genesis-starter"
 SINGLE_SITE=1
-
+REPOSITORY="git@github.com:log-oscon/WP-Construct.git"
 
 echo "-----------------------------"
 echo "${TITLE}"
 echo "-----------------------------"
+
+## CHECKOUT PROJECT ##
+if [ ! -z "$REPOSITORY" ] && [ ! -d "./wordpress/.git" ]; then
+	echo "No local repository found. Downloading boilerplate / project from GIT..."
+	git clone $REPOSITORY $ROOT/wordpress
+fi
 
 ## PROJECT DEPENDENCIES ##
 echo "Building project dependencies..."
