@@ -34,7 +34,14 @@ services:
       - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
       - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
   phpfpm:
-    image: 10up/phpfpm
+    build:
+      context: ./images/phpfpm
+      args:
+        WPSNAPSHOTS_REPO: "${WPSNAPSHOTS_REPO}"
+        WPSNAPSHOTS_AWS_KEY: "${WPSNAPSHOTS_AWS_KEY}"
+        WPSNAPSHOTS_AWS_SECRET: "${WPSNAPSHOTS_AWS_SECRET}"
+        WPSNAPSHOTS_USER: "${WPSNAPSHOTS_USER}"
+        WPSNAPSHOTS_EMAIL: "${WPSNAPSHOTS_EMAIL}"
     depends_on:
       - mysql
       - memcached
