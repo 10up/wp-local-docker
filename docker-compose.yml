@@ -34,14 +34,7 @@ services:
       - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
       - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
   phpfpm:
-    build:
-      context: ./images/phpfpm
-      args:
-        WPSNAPSHOTS_REPO: "${WPSNAPSHOTS_REPO}"
-        WPSNAPSHOTS_AWS_KEY: "${WPSNAPSHOTS_AWS_KEY}"
-        WPSNAPSHOTS_AWS_SECRET: "${WPSNAPSHOTS_AWS_SECRET}"
-        WPSNAPSHOTS_USER: "${WPSNAPSHOTS_USER}"
-        WPSNAPSHOTS_EMAIL: "${WPSNAPSHOTS_EMAIL}"
+    image: 10up/phpfpm
     depends_on:
       - mysql
       - memcached
@@ -67,3 +60,16 @@ services:
       - "./config/certs:/etc/nginx/certs"
       - "./logs/nginx:/var/log/nginx"
     restart: always
+  wpsnapshots:
+    depends_on:
+      - phpfpm
+    build:
+      context: ./images/wpsnapshots
+      args:
+        WPSNAPSHOTS_REPO: "${WPSNAPSHOTS_REPO}"
+        WPSNAPSHOTS_AWS_KEY: "${WPSNAPSHOTS_AWS_KEY}"
+        WPSNAPSHOTS_AWS_SECRET: "${WPSNAPSHOTS_AWS_SECRET}"
+        WPSNAPSHOTS_USER: "${WPSNAPSHOTS_USER}"
+        WPSNAPSHOTS_EMAIL: "${WPSNAPSHOTS_EMAIL}"
+    volumes:
+      - "./wordpress:/var/www/html"

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose exec phpfpm wpsnapshots "$@"
+docker-compose exec wpsnapshots wpsnapshots "$@"
