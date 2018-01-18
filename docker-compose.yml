@@ -61,13 +61,7 @@ services:
       - "./logs/nginx:/var/log/nginx"
     restart: always
   wpsnapshots:
-    build:
-      context: ./images/wpsnapshots
-      args:
-        WPSNAPSHOTS_REPO: "${WPSNAPSHOTS_REPO}"
-        WPSNAPSHOTS_AWS_KEY: "${WPSNAPSHOTS_AWS_KEY}"
-        WPSNAPSHOTS_AWS_SECRET: "${WPSNAPSHOTS_AWS_SECRET}"
-        WPSNAPSHOTS_USER: "${WPSNAPSHOTS_USER}"
-        WPSNAPSHOTS_EMAIL: "${WPSNAPSHOTS_EMAIL}"
+    build: images/wpsnapshots
     volumes:
+      - "./config/wpsnapshots:/wpsnapshots"
       - "./wordpress:/var/www/html"
