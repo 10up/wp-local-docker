@@ -1,3 +1,3 @@
 @echo off
 
-docker-compose exec wpsnapshots wpsnapshots %*
+docker-compose run wpsnapshots %*
