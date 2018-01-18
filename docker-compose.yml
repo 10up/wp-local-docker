@@ -62,6 +62,9 @@ services:
     restart: always
   wpsnapshots:
     build: images/wpsnapshots
+    depends_on:
+      - mysql
+      - phpfpm
     volumes:
       - "./config/wpsnapshots:/wpsnapshots"
       - "./wordpress:/var/www/html"
