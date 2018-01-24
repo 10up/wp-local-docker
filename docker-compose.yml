@@ -60,3 +60,11 @@ services:
       - "./config/certs:/etc/nginx/certs"
       - "./logs/nginx:/var/log/nginx"
     restart: always
+  wpsnapshots:
+    build: images/wpsnapshots
+    depends_on:
+      - mysql
+      - phpfpm
+    volumes:
+      - "./config/wpsnapshots:/wpsnapshots"
+      - "./wordpress:/var/www/html"

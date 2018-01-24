@@ -40,3 +40,5 @@ docker-compose.override.yml
 
 notes.md
 /config/elasticsearch/plugins/*
+
+config/wpsnapshots/.wpsnapshots.json
