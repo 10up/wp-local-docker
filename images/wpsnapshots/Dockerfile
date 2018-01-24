@@ -6,6 +6,6 @@ RUN composer global require 10up/wpsnapshots:dev-master
 
 ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
-COPY ./entrypoint.sh /
+COPY ./snapshots.sh /
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD [ "sh", "-c", "trap 'echo dying; exit' SIGINT SIGTERM; while true; do sleep 2; done"]

@@ -3,7 +3,11 @@ set -e
 
 maybe_run_wpsnapshots() {
     if [ -e /wpsnapshots/.wpsnapshots.json ]; then
-        ln -s /wpsnapshots/.wpsnapshots.json /root/.wpsnapshots.json
+
+        if [ ! -e /root/.wpsnapshots.json ]; then
+            ln -s /wpsnapshots/.wpsnapshots.json /root/.wpsnapshots.json
+        fi
+
         wpsnapshots "$@"
      else
         echo 'WP Snapshots is not configured, you must run docker-compose wpsnapshots configure <repository>';
