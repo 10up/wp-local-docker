@@ -20,10 +20,7 @@ case "$1" in
         wpsnapshots "$@"
         mv /root/.wpsnapshots.json /wpsnapshots/.wpsnapshots.json
         ;;
-    push|pull|search|delete|create-repository)
-        maybe_run_wpsnapshots "$@"
-        ;;
     *)
-        exec "$@"
+        maybe_run_wpsnapshots "$@"
         ;;
 esac
