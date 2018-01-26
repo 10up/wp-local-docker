@@ -88,6 +88,26 @@ Alternatively, there is a script in the `/bin` directory that allows you to SSH 
 
 MailCatcher runs a simple local SMTP server which catches any message sent to it, and displays it in it's built-in web interface. All emails sent by WordPress will be intercepted by MailCatcher. To view emails in the MailCatcher web interface, navigate to `http://localhost:1080` in your web browser of choice.
 
+## WP Snapshots
+
+[WP Snapshots](https://github.com/10up/wpsnapshots) is a project sharing tool for WordPress empowering developers to easily push snapshots of projects into the cloud for sharing with team members. Team members can pull snapshots such that everyhing "just works".  WP Local Docker comes bundled with WP Snapshots and comes with a bin script to proxy commands from the host to the docker containers.  To use WP Snapshots with WP Local Docker, follow the [configuration instructions](https://github.com/10up/wpsnapshots#configure), substituting `./bin/wpsnapshots.sh` for `wpsnapshots` in the CLI.
+
+Example:
+
+```sh
+./bin/wpsnapshots configure 10up
+```
+
+Once configured, you can use all of the WP Snapshots commands, again substituting `./bin/wpsnapshots.sh` for `wpsnapshots` in the CLI.
+
+Examples:
+
+```sh
+./bin/wpsnapshots.sh push
+./bin/wpsnapshots.sh pull <snapshot-id>
+./bin/wpsnapshots.sh search <search-text>
+```
+
 ## Credits
 
 This project is our own flavor of an environment created by John Bloch.
