@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose exec wpsnapshots /snapshots.sh $@
+docker-compose exec wpsnapshots /snapshots.sh "$@"
