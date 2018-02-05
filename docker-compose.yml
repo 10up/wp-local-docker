@@ -24,7 +24,7 @@ services:
     image: memcached:latest
     restart: always
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.5
     restart: always
     environment:
       ES_JAVA_OPTS: "-Xms750m -Xmx750m"
@@ -60,3 +60,11 @@ services:
       - "./config/certs:/etc/nginx/certs"
       - "./logs/nginx:/var/log/nginx"
     restart: always
+  wpsnapshots:
+    build: images/wpsnapshots
+    depends_on:
+      - mysql
+      - phpfpm
+    volumes:
+      - "./config/wpsnapshots:/wpsnapshots"
+      - "./wordpress:/var/www/html"

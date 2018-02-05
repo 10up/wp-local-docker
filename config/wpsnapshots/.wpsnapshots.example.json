@@ -1,0 +1,6 @@
+{
+  "repository": "<Snapshot Repository>",
+  "access_key_id": "<AWS Access Key>",
+  "secret_access_key": "<AWS Secret Key>",
+  "region": "us-west-1"
+}
