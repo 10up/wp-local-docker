@@ -26,27 +26,34 @@ if exist "./wordpress/wp-config.php" (
 	REM Adjust settings
 	docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
 
-	REM Remove all posts, comments, and terms
-	docker-compose exec --user www-data phpfpm wp site empty --yes
+	REM Ask to remove default content ?
+	SET /P REMOVE_DEFAULT_CONTENT=[Do you want to remove the default content? [y/n]]
 
-	REM Remove plugins and themes
-	docker-compose exec --user www-data phpfpm wp plugin delete hello
-	docker-compose exec --user www-data phpfpm wp plugin delete akismet
-	docker-compose exec --user www-data phpfpm wp theme delete twentyfifteen
-	docker-compose exec --user www-data phpfpm wp theme delete twentysixteen
+	if "y" == "%REMOVE_DEFAULT_CONTENT%" (
+		REM Remove all posts, comments, and terms
+		docker-compose exec --user www-data phpfpm wp site empty --yes
 
-	REM Remove widgets
-	docker-compose exec --user www-data phpfpm wp widget delete search-2
-	docker-compose exec --user www-data phpfpm wp widget delete recent-posts-2
-	docker-compose exec --user www-data phpfpm wp widget delete recent-comments-2
-	docker-compose exec --user www-data phpfpm wp widget delete archives-2
-	docker-compose exec --user www-data phpfpm wp widget delete categories-2
-	docker-compose exec --user www-data phpfpm wp widget delete meta-2
+		REM Remove plugins and themes
+		docker-compose exec --user www-data phpfpm wp plugin delete hello
+		docker-compose exec --user www-data phpfpm wp plugin delete akismet
+		docker-compose exec --user www-data phpfpm wp theme delete twentyfifteen
+		docker-compose exec --user www-data phpfpm wp theme delete twentysixteen
+
+		REM Remove widgets
+		docker-compose exec --user www-data phpfpm wp widget delete search-2
+		docker-compose exec --user www-data phpfpm wp widget delete recent-posts-2
+		docker-compose exec --user www-data phpfpm wp widget delete recent-comments-2
+		docker-compose exec --user www-data phpfpm wp widget delete archives-2
+		docker-compose exec --user www-data phpfpm wp widget delete categories-2
+		docker-compose exec --user www-data phpfpm wp widget delete meta-2
+
+		REM Replace widgets by the monster widget
+		docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
+		docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
+	)
 
 	REM Install additional plugins
 	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
-	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
-	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
 
 	echo "Installation done."
 	echo "------------------"
