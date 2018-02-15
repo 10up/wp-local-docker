@@ -3,7 +3,7 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 
 TITLE="WP-Docker-Construct"
 ADMIN_EMAIL="engenharia@log.pt"
-URL="docker-local.dev"
+URL="docker.local"
 SINGLE_SITE=1
 REPOSITORY="git@github.com:log-oscon/WP-Construct.git"
 
@@ -14,7 +14,9 @@ echo "-----------------------------"
 ## CHECKOUT PROJECT ##
 if [ ! -z "$REPOSITORY" ] && [ ! -d "./wordpress/.git" ]; then
 	echo "No local repository found. Downloading boilerplate / project from GIT..."
-	git clone $REPOSITORY $ROOT/wordpress
+  cd "$ROOT/wordpress"
+	git clone $REPOSITORY .
+  cd "$ROOT"
 fi
 
 ## PROJECT DEPENDENCIES ##
