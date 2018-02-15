@@ -23,7 +23,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 1. Add a custom URL to your hosts file.
     1. On Linux / Unix / OSX, the file is found at `/private/etc/hosts`
     2. `127.0.0.1  docker.local`
-2. `git clone https://github.com/log-oscon/wp-local-docker.git <my-project-name>`
+2. `git clone git@github.com:log-oscon/WP-Docker-Construct.git <my-project-name>`
 3. `cd <my-project-name>`
 4. `docker-compose up`
 5. Edit `setup.sh` to declare single or multisite install
