@@ -48,8 +48,12 @@ if "y" == "%REMOVE_DEFAULT_CONTENT%" (
 	docker-compose exec --user www-data phpfpm wp widget delete archives-2
 	docker-compose exec --user www-data phpfpm wp widget delete categories-2
 	docker-compose exec --user www-data phpfpm wp widget delete meta-2
+)
 
-	REM Replace widgets by the monster widget
+REM Ask to install Monster Widget plugin
+SET /P INSTALL_MONSTER_WIDGET=[Do you want to install the Monster Widget plugin? [y/n]]
+
+if "y" = $INSTALL_MONSTER_WIDGET (
 	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
 	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
 )

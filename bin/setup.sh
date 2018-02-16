@@ -54,8 +54,14 @@ then
 	docker-compose exec --user www-data phpfpm wp widget delete search-2
 	docker-compose exec --user www-data phpfpm wp widget delete categories-2
 	docker-compose exec --user www-data phpfpm wp widget delete meta-2
+fi
 
-	# Replace widgets by the monster widget
+# Ask to install Monster Widget plugin
+echo -n "Do you want to install the Monster Widget plugin? [y/n]"
+read INSTALL_MONSTER_WIDGET
+
+if [ "y" = $INSTALL_MONSTER_WIDGET ]
+then
 	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
 	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
 fi
