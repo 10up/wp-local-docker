@@ -51,6 +51,7 @@ then
 fi
 
 # Install additional plugins
+docker-compose exec --user www-data phpfpm wp plugin install gutenberg --activate
 docker-compose exec --user www-data phpfpm wp plugin install developer --activate
 
 echo "Installation done."
