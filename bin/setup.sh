@@ -9,25 +9,9 @@ echo "WordPress config file not found. Installing..."
 docker-compose exec --user www-data phpfpm wp core download
 docker-compose exec -T --user www-data phpfpm wp core config
 
-# Ask for the site name
-echo -n "Enter the site title and press [ENTER]: "
-read TITLE
-
-# Ask for the user name
-echo -n "Enter your username and press [ENTER]: "
-read ADMIN_USER
-
-# Ask for the user email
-echo -n "Enter your email and press [ENTER]: "
-read ADMIN_EMAIL
-
-# Ask for the password
-echo -n "Enter your password and press [ENTER]: "
-read ADMIN_PASSWORD
-
 # Install WordPress
 docker-compose exec --user www-data phpfpm wp db create
-docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email=$ADMIN_EMAIL --admin_password=$ADMIN_PASSWORD
+ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$1" --admin_user="$2" --admin_email="$3")
 
 # Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
@@ -71,6 +55,6 @@ docker-compose exec --user www-data phpfpm wp plugin install developer --activat
 
 echo "Installation done."
 echo "------------------"
-echo "Username: $ADMIN_USER"
-echo "Password: $ADMIN_PASSWORD"
+echo "Admin username: $2"
+echo "$ADMIN_PASSWORD"
 open http://localhost/wp-login.php
