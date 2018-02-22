@@ -3,13 +3,21 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 
 TITLE="WP-Docker-Construct"
 ADMIN_EMAIL="engenharia@log.pt"
-URL="docker-local.dev"
-SINGLE_SITE=1
 REPOSITORY="git@github.com:log-oscon/WP-Construct.git"
 
 echo "-----------------------------"
 echo "${TITLE}"
 echo "-----------------------------"
+
+read -p "Write your domain: " site_url
+URL="${site_url// /-}.loc";
+
+read -p "is Multisite (y/n)? default n: " is_multisite
+case "$is_multisite" in 
+  y|Y ) SINGLE_SITE=1;;
+  n|N ) SINGLE_SITE=0;;
+  * ) SINGLE_SITE=0;;
+esac
 
 ## CHECKOUT PROJECT ##
 if [ ! -z "$REPOSITORY" ] && [ ! -d "./wordpress/.git" ]; then
@@ -71,5 +79,8 @@ fi
 echo "Updating WordPress"
 docker-compose exec --user www-data phpfpm wp core update
 docker-compose exec --user www-data phpfpm wp core update-db
+
+#insert url on hosts file
+echo "127.0.0.1 $URL" | sudo tee -ai /private/etc/hosts
 
 echo "All done!"
