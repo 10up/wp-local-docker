@@ -1,5 +1,11 @@
 @echo off
 
+REM Parameters
+SETLOCAL
+SET TITLE=%1
+SET ADMIN_USER=%2
+SET ADMIN_EMAIL=%3
+
 if exist "./wordpress/wp-config.php" (
 	echo "WordPress config file found."
 	exit 5
@@ -11,7 +17,7 @@ docker-compose exec --user www-data phpfpm wp core config
 
 REM Install WordPress
 docker-compose exec --user www-data phpfpm wp db create
-SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%1" --admin_user="%2" --admin_email="%3")
+SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
 
 REM Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
@@ -52,6 +58,6 @@ docker-compose exec --user www-data phpfpm wp plugin install developer --activat
 
 echo "Installation done."
 echo "------------------"
-echo "Admin Username: %2"
+echo "Admin Username: %ADMIN_USER%"
 echo "%ADMIN_PASSWORD%"
 start "" http://localhost/wp-login.php

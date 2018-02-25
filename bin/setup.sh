@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Parameters
+TITLE=$1
+ADMIN_USER=$2
+ADMIN_EMAIL=$3
+
 if [ -f "./wordpress/wp-config.php" ]; then
 	echo "WordPress config file found."
 	exit 1
@@ -11,7 +16,7 @@ docker-compose exec -T --user www-data phpfpm wp core config
 
 # Install WordPress
 docker-compose exec --user www-data phpfpm wp db create
-ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$1" --admin_user="$2" --admin_email="$3")
+ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL")
 
 # Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
@@ -56,6 +61,6 @@ docker-compose exec --user www-data phpfpm wp plugin install developer --activat
 
 echo "Installation done."
 echo "------------------"
-echo "Admin username: $2"
+echo "Admin username: $ADMIN_USER"
 echo "$ADMIN_PASSWORD"
 open http://localhost/wp-login.php
