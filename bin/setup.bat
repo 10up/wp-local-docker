@@ -6,6 +6,9 @@ SET TITLE=%1
 SET ADMIN_USER=%2
 SET ADMIN_EMAIL=%3
 
+if not defined EMPTY_CONTENT set EMPTY_CONTENT=true
+if not "%EMPTY_CONTENT%"==true SET EMPTY_CONTENT=false
+
 if exist "./wordpress/wp-config.php" (
 	echo "WordPress config file found."
 	exit 5
@@ -22,10 +25,8 @@ SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install 
 REM Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
 
-REM Ask to remove default content ?
-SET /P REMOVE_DEFAULT_CONTENT=[Do you want to remove the default content? [y/n]]
-
-if "y" == "%REMOVE_DEFAULT_CONTENT%" (
+REM Remove default content
+if true == "%EMPTY_CONTENT%" (
 	REM Remove all posts, comments, and terms
 	docker-compose exec --user www-data phpfpm wp site empty --yes
 

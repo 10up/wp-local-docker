@@ -4,6 +4,7 @@
 TITLE=$1
 ADMIN_USER=$2
 ADMIN_EMAIL=$3
+EMPTY_CONTENT=${4:-true}
 
 if [ -f "./wordpress/wp-config.php" ]; then
 	echo "WordPress config file found."
@@ -21,11 +22,8 @@ ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --ur
 # Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
 
-# Ask to remove default content ?
-echo -n "Do you want to remove the default content? [y/n]"
-read REMOVE_DEFAULT_CONTENT
-
-if [ "y" = $REMOVE_DEFAULT_CONTENT ]
+# Remove default content
+if [ "true" = $EMPTY_CONTENT ]
 then
 	# Remove all posts, comments, and terms
 	docker-compose exec --user www-data phpfpm wp site empty --yes
