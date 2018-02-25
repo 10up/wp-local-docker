@@ -9,6 +9,9 @@ SET ADMIN_EMAIL=%3
 if not defined EMPTY_CONTENT set EMPTY_CONTENT=true
 if not "%EMPTY_CONTENT%"==true SET EMPTY_CONTENT=false
 
+if not defined MULTISITE set MULTISITE=false
+if not "%MULTISITE%"==true SET MULTISITE=false
+
 if exist "./wordpress/wp-config.php" (
 	echo "WordPress config file found."
 	exit 5
@@ -20,7 +23,11 @@ docker-compose exec --user www-data phpfpm wp core config
 
 REM Install WordPress
 docker-compose exec --user www-data phpfpm wp db create
-SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
+if true == "%EMPTY_CONTENT%" (
+	SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
+) else (
+	SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
+)
 
 REM Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"

@@ -5,6 +5,7 @@ TITLE=$1
 ADMIN_USER=$2
 ADMIN_EMAIL=$3
 EMPTY_CONTENT=${4:-true}
+MULTISITE=${5:-false}
 
 if [ -f "./wordpress/wp-config.php" ]; then
 	echo "WordPress config file found."
@@ -17,7 +18,12 @@ docker-compose exec -T --user www-data phpfpm wp core config
 
 # Install WordPress
 docker-compose exec --user www-data phpfpm wp db create
-ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL")
+if [ "true" = $MULTISITE ]
+then
+	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL")
+else
+	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL")
+fi
 
 # Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
