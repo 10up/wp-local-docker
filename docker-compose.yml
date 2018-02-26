@@ -13,7 +13,7 @@ services:
       PMA_HOST: mysql
       PMA_PORT: 3306
   mysql:
-    image: mysql:latest
+    image: mariadb:latest
     volumes:
       - "./data/db:/var/lib/mysql"
     restart: always
