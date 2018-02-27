@@ -10,13 +10,13 @@ echo "${TITLE}"
 echo "-----------------------------"
 
 read -p "Write your domain: " site_url
-URL="${site_url// /-}.loc";
+URL="${site_url// /-}.test";
 
 read -p "is Multisite (y/n)? default n: " is_multisite
 case "$is_multisite" in 
-  y|Y ) SINGLE_SITE=1;;
-  n|N ) SINGLE_SITE=0;;
-  * ) SINGLE_SITE=0;;
+  y|Y ) MULTISITE=1;;
+  n|N ) MULTISITE=0;;
+  * ) MULTISITE=0;;
 esac
 
 ## CHECKOUT PROJECT ##
@@ -55,7 +55,7 @@ else
 #   define( 'WP_ENV', 'development' );
 # PHP
 
-  if [ $SINGLE_SITE -eq 0 ]; then
+  if [ $MULTISITE -eq 0 ]; then
     echo " * Setting up multisite \"$TITLE\" at $URL"
     docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL" --subdomains
     docker-compose exec --user www-data phpfpm wp super-admin add admin
@@ -80,7 +80,10 @@ echo "Updating WordPress"
 docker-compose exec --user www-data phpfpm wp core update
 docker-compose exec --user www-data phpfpm wp core update-db
 
-#insert url on hosts file
-echo "127.0.0.1 $URL" | sudo tee -ai /private/etc/hosts
+
+read -p "Write URL: $URL on hosts (y/n)? default n: " write_hosts
+case "$write_hosts" in 
+  y|Y ) echo "127.0.0.1 $URL" | sudo tee -ai /private/etc/hosts;;
+esac
 
 echo "All done!"
