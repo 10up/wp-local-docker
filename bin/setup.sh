@@ -22,7 +22,9 @@ esac
 ## CHECKOUT PROJECT ##
 if [ ! -z "$REPOSITORY" ] && [ ! -d "./wordpress/.git" ]; then
 	echo "No local repository found. Downloading boilerplate / project from GIT..."
-	git clone $REPOSITORY $ROOT/wordpress
+  cd "$ROOT/wordpress"
+	git clone $REPOSITORY .
+  cd "$ROOT"
 fi
 
 ## PROJECT DEPENDENCIES ##
@@ -79,7 +81,6 @@ fi
 echo "Updating WordPress"
 docker-compose exec --user www-data phpfpm wp core update
 docker-compose exec --user www-data phpfpm wp core update-db
-
 
 read -p "Write URL: $URL on hosts (y/n)? default n: " write_hosts
 case "$write_hosts" in 

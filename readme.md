@@ -22,14 +22,17 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 1. Add a custom URL to your hosts file.
     1. On Linux / Unix / OSX, the file is found at `/private/etc/hosts`
-    2. `127.0.0.1  docker-local.dev`
-2. `git clone https://github.com/log-oscon/wp-local-docker.git <my-project-name>`
+    2. `127.0.0.1  docker.local`
+2. `git clone git@github.com:log-oscon/WP-Docker-Construct.git <my-project-name>`
 3. `cd <my-project-name>`
 4. `docker-compose up`
 5. Edit `setup.sh` to declare single or multisite install
     1. `SINGLE_SITE=0` (single site)
     2. `SINGLE_SITE=1` (multisite site)
-6. Run setup to download WordPress and create a `wp-config.php` file.
+6. Edit `setup.sh` if you want to add this docker image to another project
+    1. `TITLE="Your Project Name"`
+    2. `REPOSITORY="projectgiturl"`
+7. Run setup to download WordPress and create a `wp-config.php` file.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
 
 Default MySQL connection information (from within PHP-FPM container):
@@ -107,12 +110,16 @@ Kudos to [10up](https://github.com/10up/wp-local-docker).
 | Add WordPress Multisite install     |    X   |         |
 | Run Composer dependencies           |    X   |         |
 | Run NPM dependencies                |    X   |         |
-| Add Genesis Starter-Theme           |    X   |  [1]    |
+| Add Genesis Starter-Theme           |    X   |   [1]   |
 | Add editorconfig file               |    X   |         |
 | Add eslint configurations           |    X   |         |
 | Add phpcslint configuration         |    X   |         |
+| Get a SQL content seed with WP-CLI  |        |   [2]   |
+| Choose Node version                 |        |         |
+| Activate WP plugins after building  |        |         |
 
 [1] There is an issue while trying to run the `npm run build` script.
+[2] https://make.wordpress.org/cli/handbook/running-commands-remotely/#aliases
 
 | Deploy                              | Status |  Notes  |
 |-------------------------------------|:------:|---------|
