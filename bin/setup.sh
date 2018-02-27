@@ -3,13 +3,21 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 
 TITLE="WP-Docker-Construct"
 ADMIN_EMAIL="engenharia@log.pt"
-URL="docker.local"
-SINGLE_SITE=1
 REPOSITORY="git@github.com:log-oscon/WP-Construct.git"
 
 echo "-----------------------------"
 echo "${TITLE}"
 echo "-----------------------------"
+
+read -p "Write your domain: " site_url
+URL="${site_url// /-}.local";
+
+read -p "is Multisite (y/n)? default n: " is_multisite
+case "$is_multisite" in 
+  y|Y ) MULTISITE=1;;
+  n|N ) MULTISITE=0;;
+  * ) MULTISITE=0;;
+esac
 
 ## CHECKOUT PROJECT ##
 if [ ! -z "$REPOSITORY" ] && [ ! -d "./wordpress/.git" ]; then
@@ -49,7 +57,7 @@ else
 #   define( 'WP_ENV', 'development' );
 # PHP
 
-  if [ $SINGLE_SITE -eq 0 ]; then
+  if [ $MULTISITE -eq 0 ]; then
     echo " * Setting up multisite \"$TITLE\" at $URL"
     docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL" --subdomains
     docker-compose exec --user www-data phpfpm wp super-admin add admin
@@ -73,5 +81,10 @@ fi
 echo "Updating WordPress"
 docker-compose exec --user www-data phpfpm wp core update
 docker-compose exec --user www-data phpfpm wp core update-db
+
+read -p "Write URL: $URL on hosts (y/n)? default n: " write_hosts
+case "$write_hosts" in 
+  y|Y ) echo "127.0.0.1 $URL" | sudo tee -ai /private/etc/hosts;;
+esac
 
 echo "All done!"
