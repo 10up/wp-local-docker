@@ -14,15 +14,22 @@ if not "%MULTISITE%"==true SET MULTISITE=false
 
 if exist "./wordpress/wp-config.php" (
 	echo "WordPress config file found."
-	exit 5
+
+	SET /P REINSTALL= "Do you want to reinstall? [y/n]"
+
+	if "y" = "%REINSTALL%" (
+		docker-compose exec --user www-data phpfpm wp db drop --yes
+	else
+		echo "Installation aborted."
+		exit 5
+	fi
 )
 
-echo "WordPress config file not found. Installing..."
-docker-compose exec --user www-data phpfpm wp core download
-docker-compose exec --user www-data phpfpm wp core config
-
 REM Install WordPress
+docker-compose exec --user www-data phpfpm wp core download --force
+docker-compose exec --user www-data phpfpm wp core config --force
 docker-compose exec --user www-data phpfpm wp db create
+
 if true == "%EMPTY_CONTENT%" (
 	SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
 ) else (
