@@ -62,7 +62,7 @@ if true == "%EMPTY_CONTENT%" (
 REM Ask to install Monster Widget plugin
 SET /P INSTALL_MONSTER_WIDGET=[Do you want to install the Monster Widget plugin? [y/n]]
 
-if "y" = $INSTALL_MONSTER_WIDGET (
+if "y" = "%INSTALL_MONSTER_WIDGET%" (
 	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
 	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
 )
