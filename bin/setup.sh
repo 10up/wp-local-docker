@@ -10,7 +10,7 @@ echo "${TITLE}"
 echo "-----------------------------"
 
 read -p "Write your domain: " site_url
-URL="${site_url// /-}.test";
+URL="${site_url// /-}.local";
 
 read -p "is Multisite (y/n)? default n: " is_multisite
 case "$is_multisite" in 
