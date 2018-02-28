@@ -95,7 +95,7 @@ MailCatcher runs a simple local SMTP server which catches any message sent to it
 Example:
 
 ```sh
-./bin/wpsnapshots configure 10up
+./bin/wpsnapshots.sh configure 10up
 ```
 
 Once configured, you can use all of the WP Snapshots commands, again substituting `./bin/wpsnapshots.sh` for `wpsnapshots` in the CLI.
