@@ -14,9 +14,9 @@ URL="${site_url// /-}.local";
 
 read -p "is Multisite (y/n)? default n: " is_multisite
 case "$is_multisite" in 
-  y|Y ) MULTISITE=1;;
-  n|N ) MULTISITE=0;;
-  * ) MULTISITE=0;;
+  y|Y ) MULTISITE=0;;
+  n|N ) MULTISITE=1;;
+  * ) MULTISITE=1;;
 esac
 
 ## CHECKOUT PROJECT ##
