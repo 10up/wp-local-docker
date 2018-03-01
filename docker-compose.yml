@@ -46,7 +46,7 @@ services:
       - ~/.ssh:/root/.ssh
     restart: always
     extra_hosts:
-      - "docker-local.dev:172.18.0.1"
+      - "docker-local.localhost:172.18.0.1"
   nginx:
     depends_on:
       - phpfpm
