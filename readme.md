@@ -26,7 +26,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
 	2. On Windows, run `./bin/setup`.
 1. Navigate to `http://localhost` in a browser to finish WordPress setup.
-	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your hosts file. Ex: `127.0.0.1 docker.dev`
+	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your hosts file. Ex: `127.0.0.1 docker.localhost`
 
 Default MySQL connection information (from within PHP-FPM container):
 
@@ -69,7 +69,7 @@ version: '3'
 services:
   phpfpm:
     extra_hosts:
-      - "dashboard.dev:172.18.0.1"
+      - "dashboard.localhost:172.18.0.1"
   elasticsearch:
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
