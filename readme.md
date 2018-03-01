@@ -39,9 +39,25 @@ Host: mysql
 
 Default Elasticsearch connection information (from within PHP-FPM container):
 
-```Host: http://elasticsearch:9200```
+```
+Host: http://elasticsearch:9200
+```
 
 The Elasticsearch container is configured for a maximum heap size of 750MB to prevent out of memory crashes when using the default 2GB memory limit enforced by Docker for Mac and Docker for Windows installations or for Linux installations limited to less than 2GB. If you require additional memory for Elasticsearch override the value in a `docker-compose.override.yml` file as described below.
+
+## Administrative Tools
+
+We've bundled a simple administrative override file to aid in local development where appropriate. This file introduces both [phpMyAdmin](https://www.phpmyadmin.net/) and [phpMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to the Docker network for local administration of the database and object cache, respectively.
+
+You can run this atop a standard Docker installation by specifying _both_ the standard and the override configuration when initializing the service:
+
+```
+docker-compose -f docker-compose.yml -f admin-compose.yml up
+```
+
+The database tools can be accessed [on port 8092](http://localhost:8092).
+
+The cache tools can be accessed [on port 8093](http://localhost:8093).
 
 ## Docker Compose Overrides File
 
