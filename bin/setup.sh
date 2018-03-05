@@ -14,9 +14,9 @@ URL="${site_url// /-}.local";
 
 read -p "is Multisite (y/n)? default n: " is_multisite
 case "$is_multisite" in 
-  y|Y ) MULTISITE=0;;
-  n|N ) MULTISITE=1;;
-  * ) MULTISITE=1;;
+  y|Y ) MULTISITE=1;;
+  n|N ) MULTISITE=0;;
+  * ) MULTISITE=0;;
 esac
 
 ## CHECKOUT PROJECT ##
@@ -57,7 +57,7 @@ else
 #   define( 'WP_ENV', 'development' );
 # PHP
 
-  if [ $MULTISITE -eq 0 ]; then
+  if [ $MULTISITE -eq 1 ]; then
     echo " * Setting up multisite \"$TITLE\" at $URL"
     docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL" --subdomains
     docker-compose exec --user www-data phpfpm wp super-admin add admin
