@@ -57,7 +57,7 @@ else
 #   define( 'WP_ENV', 'development' );
 # PHP
 
-  if [ $MULTISITE -eq 0 ]; then
+  if [ $MULTISITE -eq 1 ]; then
     echo " * Setting up multisite \"$TITLE\" at $URL"
     docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL" --subdomains
     docker-compose exec --user www-data phpfpm wp super-admin add admin
