@@ -1,0 +1,23 @@
+version: '3'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST mysql
+    links:
+      - mysql:db
+    ports:
+      - 8092:80
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: password
+  phpmemcacheadmin:
+    image: hitwe/phpmemcachedadmin
+    ports:
+      - "8093:80"
+    depends_on:
+      - memcached
