@@ -1,16 +1,20 @@
 #!/bin/bash
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
-cd ROOT
+cd ${ROOT}
 
 echo "-----------------------------"
 echo "${PWD##*/}"
 echo "-----------------------------"
 
-site_url='localhost'
-read -p "Write your domain | default: ${site_url} |: " site_url
-URL=${site_url// /-};
+read -p "Write your domain | default: localhost |: " site_url
 
-if ! echo "${site_url}" | grep '^[a-zA-Z0-9]*\.[a-zA-Z]*$' >/dev/null; then
+if [ -z "${site_url}" ]; then
+  URL='localhost.local'
+else 
+  URL=${site_url// /-};
+fi
+
+if ! echo "${URL}" | grep '^[a-zA-Z0-9]*\.[a-zA-Z]*$' >/dev/null; then
 	URL="${URL}.local";
 fi
 
@@ -44,9 +48,9 @@ if [ ! -z "$REPOSITORY" ]; then
 
 	read -p "Create wp_config and install clean database (y/n)? default y: " clean_database
 	case "$clean_database" in 
-		y|Y ) new_database
+		y|Y ) new_database;;
 		n|N ) break;;
-		* ) new_database
+		* ) new_database;;
 	esac
 
 else
