@@ -30,6 +30,11 @@ while true; do
 
 done
 
+if [ ! -d "wordpress" ]; then
+  mkdir "wordpress"
+  chmod -R a+w "wordpress"
+fi
+
 new_database() {
 
 	if [ -f "${ROOT}/wordpress/wp-config.php" ]; then
@@ -42,12 +47,12 @@ new_database() {
 read -p "Wordpress repository, empty to clean wordpress: " REPOSITORY
 
 ## WORDPRESS SETUP ##
-if [ ! -z "$REPOSITORY" ]; then
+if [ ! -z "${REPOSITORY}" ]; then
 	echo "Local repository found. Downloading..."
 	git clone $REPOSITORY "$ROOT/wordpress"
 
 	read -p "Create wp_config and install clean database (y/n)? default y: " clean_database
-	case "$clean_database" in 
+	case "${clean_database}" in 
 		y|Y ) new_database;;
 		n|N ) break;;
 		* ) new_database;;
