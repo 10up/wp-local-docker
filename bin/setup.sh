@@ -64,19 +64,19 @@ else
 	docker-compose exec --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
 
 	read -p "is Multisite (y/n)? default n: " is_multisite
-	case "$is_multisite" in
+	case "${is_multisite}" in
 		y|Y ) MULTISITE=1;;
 		n|N ) MULTISITE=0;;
 		* ) MULTISITE=0;;
 	esac
 
-	if [ $MULTISITE -eq 1 ]; then
-		echo " * Setting up multisite \"$TITLE\" at $URL"
-		docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL" --subdomains
+	if [ ${MULTISITE} -eq 1 ]; then
+		echo " * Setting up multisite \"${TITLE}\" at ${URL}"
+		docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}" --subdomains
 		docker-compose exec --user www-data phpfpm wp super-admin add admin
 	else
-		echo " * Setting up \"$TITLE\" at $URL"
-		docker-compose exec --user www-data phpfpm wp core install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL"
+		echo " * Setting up \"${TITLE}\" at ${URL}"
+		docker-compose exec --user www-data phpfpm wp core install --url="${URL}" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}"
 	fi
 
 fi
@@ -89,15 +89,15 @@ wordpress_updater() {
 }
 
 read -p "Update Wordpress? (y/n)? default y: " is_multisite
-case "$is_multisite" in 
+case "${is_multisite}" in 
 	y|Y ) wordpress_updater;;
 	n|N ) break;;
 	* ) wordpress_updater;;
 esac
 
-read -p "Write URL: $URL on hosts (y/n)? default n: " write_hosts
+read -p "Write URL: ${URL} on hosts (y/n)? default n: " write_hosts
 case "${write_hosts}" in 
-	y|Y ) echo "127.0.0.1 $URL" | sudo tee -ai /private/etc/hosts;;
+	y|Y ) echo "127.0.0.1 ${URL}" | sudo tee -ai /private/etc/hosts;;
 esac
 
 echo "All done!"
