@@ -19,10 +19,10 @@ if exist "./wordpress/wp-config.php" (
 
 	if "y" = "%REINSTALL%" (
 		docker-compose exec --user www-data phpfpm wp db drop --yes
-	else
+	) else (
 		echo "Installation aborted."
 		exit 5
-	fi
+	)
 )
 
 REM Install WordPress
