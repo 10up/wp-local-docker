@@ -2,8 +2,10 @@
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 cd ${ROOT}
 
+TITLE=${PWD##*/}
+
 echo "-----------------------------"
-echo "${PWD##*/}"
+echo "${TITLE}"
 echo "-----------------------------"
 
 read -p "Write your domain | default: localhost |: " site_url
