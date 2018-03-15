@@ -46,7 +46,7 @@ if [ ! -z "${REPOSITORY}" ]; then
 	git clone $REPOSITORY "$ROOT/wordpress"
 fi
 
-if [ ! -f "$ROOT/wordpress/wp-config.php" ]
+if [ ! -f "$ROOT/wordpress/wp-config.php" ]; then
 	
 	echo "Run Wordpress instalation..."
 	docker-compose exec --user www-data phpfpm wp core download
@@ -69,7 +69,6 @@ if [ ! -f "$ROOT/wordpress/wp-config.php" ]
 	fi
 
 	docker-compose exec --user www-data phpfpm wp db create --url="${URL}" --path="${ROOT}/wordpress"
-
 fi
 
 wordpress_updater() {
@@ -79,8 +78,8 @@ wordpress_updater() {
 	docker-compose exec --user www-data phpfpm wp core update-db
 }
 
-read -p "Update Wordpress? (y/n)? default y: " is_multisite
-case "${is_multisite}" in 
+read -p "Update Wordpress? (y/n)? default y: " is_update
+case "${is_update}" in 
 	y|Y ) wordpress_updater;;
 	n|N ) break;;
 	* ) wordpress_updater;;
