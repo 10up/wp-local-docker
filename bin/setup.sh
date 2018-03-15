@@ -46,8 +46,8 @@ if [ ! -z "${REPOSITORY}" ]; then
 	git clone $REPOSITORY "$ROOT/wordpress"
 fi
 
-if [ ! -f "$ROOT/wordpress/wp-config.php" ]; then
-	
+wordpress_install() {
+
 	echo "Run Wordpress instalation..."
 	docker-compose exec --user www-data phpfpm wp core download
 	docker-compose exec --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
@@ -69,7 +69,15 @@ if [ ! -f "$ROOT/wordpress/wp-config.php" ]; then
 	fi
 
 	docker-compose exec --user www-data phpfpm wp db create --url="${URL}" --path="${ROOT}/wordpress"
-fi
+
+}
+
+read -p "Install Wordpress core? (y/n)? default y: " is_install
+case "${is_install}" in
+	y|Y ) wordpress_install;;
+	n|N ) break;;
+	* ) wordpress_install;;
+esac
 
 wordpress_updater() {
 	## UPDATING COMPONENTS ##
@@ -78,12 +86,15 @@ wordpress_updater() {
 	docker-compose exec --user www-data phpfpm wp core update-db
 }
 
-read -p "Update Wordpress? (y/n)? default y: " is_update
-case "${is_update}" in 
-	y|Y ) wordpress_updater;;
-	n|N ) break;;
-	* ) wordpress_updater;;
-esac
+if [ "${is_install}" == 'n' ] || [ "${is_install}" == "N" ]; then
+
+	read -p "Update Wordpress? (y/n)? default y: " is_update
+	case "${is_update}" in 
+		y|Y ) wordpress_updater;;
+		n|N ) break;;
+		* ) wordpress_updater;;
+	esac
+fi
 
 read -p "Write URL: ${URL} on hosts (y/n)? default n: " write_hosts
 case "${write_hosts}" in 
