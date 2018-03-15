@@ -37,7 +37,7 @@ if [ ! -d "wordpress" ]; then
   chmod -R a+w "wordpress"
 fi
 
-read -p "Wordpress repository, empty to clean wordpress: " REPOSITORY
+read -p "Write your project repository URL (empty for a clean install): " REPOSITORY
 
 ## WORDPRESS SETUP ##
 if [ ! -z "${REPOSITORY}" ]; then
