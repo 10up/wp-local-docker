@@ -86,15 +86,12 @@ wordpress_updater() {
 	docker-compose exec --user www-data phpfpm wp core update-db
 }
 
-if [ "${is_install}" == 'n' ] || [ "${is_install}" == "N" ]; then
-
-	read -p "Update Wordpress? (y/n)? default y: " is_update
-	case "${is_update}" in 
-		y|Y ) wordpress_updater;;
-		n|N ) break;;
-		* ) wordpress_updater;;
-	esac
-fi
+read -p "Update Wordpress? (y/n)? default y: " is_update
+case "${is_update}" in 
+	y|Y ) wordpress_updater;;
+	n|N ) break;;
+	* ) wordpress_updater;;
+esac
 
 read -p "Write URL: ${URL} on hosts (y/n)? default n: " write_hosts
 case "${write_hosts}" in 
