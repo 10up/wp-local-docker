@@ -24,7 +24,7 @@ while true; do
 
 	read -p "Write your admin email: " ADMIN_EMAIL
 
-	if echo "${ADMIN_EMAIL}" | grep '^[a-zA-Z0-9]*@[a-zA-Z0-9]*\.[a-zA-Z]*$' >/dev/null; then
+	if echo "${ADMIN_EMAIL}" | grep '^[a-zA-Z0-9._%+-]*@[a-zA-Z0-9]*\.[a-zA-Z]*$' >/dev/null; then
 		break
 	else
 		echo "Please write a valid email."
