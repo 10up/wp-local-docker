@@ -1,90 +1,101 @@
 #!/bin/bash
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
+cd ${ROOT}
 
-TITLE="WP-Docker-Construct"
-ADMIN_EMAIL="engenharia@log.pt"
-REPOSITORY="git@github.com:log-oscon/WP-Construct.git"
+TITLE=${PWD##*/}
 
 echo "-----------------------------"
 echo "${TITLE}"
 echo "-----------------------------"
 
-read -p "Write your domain: " site_url
-URL="${site_url// /-}.local";
+read -p "Write your domain | default: localhost |: " site_url
 
-read -p "is Multisite (y/n)? default n: " is_multisite
-case "$is_multisite" in 
-  y|Y ) MULTISITE=1;;
-  n|N ) MULTISITE=0;;
-  * ) MULTISITE=0;;
-esac
-
-## CHECKOUT PROJECT ##
-if [ ! -z "$REPOSITORY" ] && [ ! -d "./wordpress/.git" ]; then
-	echo "No local repository found. Downloading boilerplate / project from GIT..."
-  cd "$ROOT/wordpress"
-	git clone $REPOSITORY .
-  cd "$ROOT"
+if [ -z "${site_url}" ]; then
+  URL='localhost.local'
+else 
+  URL=${site_url// /-};
 fi
 
-## PROJECT DEPENDENCIES ##
-echo "Searching for project build script..."
-if [ -f "./wordpress/.scripts/build.sh" ]; then
-	cd "$ROOT/wordpress"
-	echo " * Starting project build"
-	sh .scripts/build.sh
-else
-	echo " * No build (.scripts/build.sh) script found."
+if ! echo "${URL}" | grep '^[a-zA-Z0-9]*\.[a-zA-Z]*$' >/dev/null; then
+	URL="${URL}.local";
 fi
+
+while true; do
+
+	read -p "Write your admin email: " ADMIN_EMAIL
+
+	if echo "${ADMIN_EMAIL}" | grep '^[a-zA-Z0-9._%+-]*@[a-zA-Z0-9]*\.[a-zA-Z]*$' >/dev/null; then
+		break
+	else
+		echo "Please write a valid email."
+	fi
+
+done
+
+if [ ! -d "wordpress" ]; then
+  mkdir "wordpress"
+  chmod -R a+w "wordpress"
+fi
+
+read -p "Write your project repository URL (empty for a clean install): " REPOSITORY
 
 ## WORDPRESS SETUP ##
-if [ -f "./wordpress/wp-config.php" ]; then
-	echo "WordPress config file found."
-else
-	echo "WordPress config file not found. Installing..."
+if [ ! -z "${REPOSITORY}" ]; then
+	
+	echo "Local repository found. Downloading..."
+	git clone $REPOSITORY "$ROOT/wordpress"
+fi
+
+wordpress_install() {
+
+	echo "Run Wordpress instalation..."
 	docker-compose exec --user www-data phpfpm wp core download
 	docker-compose exec --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
 
-# <<PHP
-#   define( 'WP_DEBUG', true );
-#   define( 'WP_DEBUG_LOG', true );
-#   define( 'WP_DEBUG_DISPLAY', false );
-#   @ini_set( 'display_errors', 0 );
-#   define( 'SAVEQUERIES', false );
-#   define( 'JETPACK_DEV_DEBUG', true );
-#   define( 'WP_CACHE', true );
-#   define( 'WP_CACHE_KEY_SALT', '$WP_CACHE_KEY_SALT' );
-#   define( 'WP_ENV', 'development' );
-# PHP
+	read -p "is Multisite (y/n)? default n: " is_multisite
+	case "${is_multisite}" in
+		y|Y ) MULTISITE=1;;
+		n|N ) MULTISITE=0;;
+		* ) MULTISITE=0;;
+	esac
 
-  if [ $MULTISITE -eq 1 ]; then
-    echo " * Setting up multisite \"$TITLE\" at $URL"
-    docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL" --subdomains
-    docker-compose exec --user www-data phpfpm wp super-admin add admin
+	if [ ${MULTISITE} -eq 1 ]; then
+		echo " * Setting up multisite \"${TITLE}\" at ${URL}"
+		docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}" --subdomains
+		docker-compose exec --user www-data phpfpm wp super-admin add admin
+	else
+		echo " * Setting up \"${TITLE}\" at ${URL}"
+		docker-compose exec --user www-data phpfpm wp core install --url="${URL}" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}"
+	fi
 
-  else
-    echo " * Setting up \"$TITLE\" at $URL"
-    docker-compose exec --user www-data phpfpm wp core install --url="$URL" --title="$TITLE" --admin_user=admin --admin_password=password --admin_email="$ADMIN_EMAIL"
-  fi
+	docker-compose exec --user www-data phpfpm wp db create --url="${URL}" --path="${ROOT}/wordpress"
 
-  ## ACTIVATING COMPONENTS ##
-  echo " * Activating the default theme"
-  docker-compose exec --user www-data phpfpm wp theme activate ${THEME}
+}
 
-  # echo " * Importing test content"
-  # docker-compose exec --user www-data phpfpm curl -OLs https://raw.githubusercontent.com/manovotny/wptest/master/wptest.xml
-  # docker-compose exec --user www-data phpfpm wp import wptest.xml --authors=create
-  # docker-compose exec --user www-data phpfpm rm wptest.xml
-fi
+read -p "Install Wordpress core? (y/n)? default y: " is_install
+case "${is_install}" in
+	y|Y ) wordpress_install;;
+	n|N ) break;;
+	* ) wordpress_install;;
+esac
 
-## UPDATING COMPONENTS ##
-echo "Updating WordPress"
-docker-compose exec --user www-data phpfpm wp core update
-docker-compose exec --user www-data phpfpm wp core update-db
+wordpress_updater() {
+	## UPDATING COMPONENTS ##
+	echo "Updating WordPress"
+	docker-compose exec --user www-data phpfpm wp core update
+	docker-compose exec --user www-data phpfpm wp core update-db
+}
 
-read -p "Write URL: $URL on hosts (y/n)? default n: " write_hosts
-case "$write_hosts" in 
-  y|Y ) echo "127.0.0.1 $URL" | sudo tee -ai /private/etc/hosts;;
+read -p "Update Wordpress? (y/n)? default y: " is_update
+case "${is_update}" in 
+	y|Y ) wordpress_updater;;
+	n|N ) break;;
+	* ) wordpress_updater;;
+esac
+
+read -p "Write URL: ${URL} on hosts (y/n)? default n: " write_hosts
+case "${write_hosts}" in 
+	y|Y ) echo "127.0.0.1 ${URL}" | sudo tee -ai /private/etc/hosts;;
 esac
 
 echo "All done!"
