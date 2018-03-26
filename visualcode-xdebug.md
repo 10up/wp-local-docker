@@ -24,3 +24,16 @@ After installing an add-on to debug PHP (we use [PHP Debug](https://github.com/f
     "/var/www/html": "/Users/{YOUR_USERNAME}/{THE_GIT_FOLDER}/wordpress",
 }
 ```
+
+## NOTE
+If debugging still doesn't work after completing the setup above, you may need to create a loopback IP.
+
+Run
+
+```
+sudo ifconfig lo0 alias 10.254.254.254
+````
+
+And add 10.254.254.254
+
+To the `config/php-fpm/docker-php-ext-xdebug.ini` file and restart the docker images.
