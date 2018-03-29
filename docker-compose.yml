@@ -61,7 +61,7 @@ services:
       - "./logs/nginx:/var/log/nginx"
     restart: always
   wpsnapshots:
-    build: images/wpsnapshots
+    image: 10up/wpsnapshots
     depends_on:
       - mysql
       - phpfpm
