@@ -17,14 +17,17 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 * [Docker](https://www.docker.com/)
 * [docker-compose](https://docs.docker.com/compose/)
 
-## Setup
+## Setup a Docker Container
 
 1. `git clone https://github.com/10up/wp-local-docker.git <my-project-name>`
 1. `cd <my-project-name>`
 1. `docker-compose up`
-1. Run setup to download WordPress and create a `wp-config.php` file.
-	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
-	2. On Windows, run `./bin/setup`.
+
+## Setup WordPress
+You will need to run a setup script to download WordPress and create a `wp-config.php` file. 
+1. With Docker running, open a new terminal window and CD into `<my-project-name>`
+	1. On Linux / Unix / OSX, run ```bash sh bin/setup.sh```
+	2. On Windows, run ```bash ./bin/setup```
 1. Navigate to `http://localhost` in a browser to finish WordPress setup.
 	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your hosts file. Ex: `127.0.0.1 docker.localhost`
 
