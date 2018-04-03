@@ -1,21 +1,8 @@
 @echo off
-
-REM Parameters
-SETLOCAL
-SET TITLE=%1
-SET ADMIN_USER=%2
-SET ADMIN_EMAIL=%3
-
-if not defined EMPTY_CONTENT set EMPTY_CONTENT=true
-if not "%EMPTY_CONTENT%"==true SET EMPTY_CONTENT=false
-
-if not defined MULTISITE set MULTISITE=false
-if not "%MULTISITE%"==true SET MULTISITE=false
-
 if exist "./wordpress/wp-config.php" (
 	echo "WordPress config file found."
 
-	SET /P REINSTALL= "Do you want to reinstall? [y/n]"
+	SET /P REINSTALL= "Do you want to reinstall? [y/n] "
 
 	if "y" = "%REINSTALL%" (
 		docker-compose exec --user www-data phpfpm wp db reset --yes
@@ -25,11 +12,23 @@ if exist "./wordpress/wp-config.php" (
 	)
 )
 
+REM Ask for the site title
+SET /P TITLE=[Site title: ]
+
+REM Ask for the user name
+SET /P ADMIN_USER=[Username: ]
+
+REM Ask for the user email
+SET /P ADMIN_EMAIL=[Your Email: ]
+
+REM Ask for the type of installation
+SET /P MULTISITE=[Do you want a multisite installation? [y/n] ]
+
 REM Install WordPress
 docker-compose exec --user www-data phpfpm wp core download --force
 docker-compose exec --user www-data phpfpm wp core config --force
 
-if true == "%MULTISITE%" (
+if "y" == "%MULTISITE%" (
 	SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
 ) else (
 	SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
@@ -38,8 +37,10 @@ if true == "%MULTISITE%" (
 REM Adjust settings
 docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
 
-REM Remove default content
-if true == "%EMPTY_CONTENT%" (
+REM Ask to remove default content ?
+SET /P EMPTY_CONTENT=[Do you want to remove the default content? [y/n] ]
+
+if "y" == "%EMPTY_CONTENT%" (
 	REM Remove all posts, comments, and terms
 	docker-compose exec --user www-data phpfpm wp site empty --yes
 
@@ -58,17 +59,24 @@ if true == "%EMPTY_CONTENT%" (
 	docker-compose exec --user www-data phpfpm wp widget delete meta-2
 )
 
-REM Ask to install Monster Widget plugin
-SET /P INSTALL_MONSTER_WIDGET=[Do you want to install the Monster Widget plugin? [y/n]]
-
-if "y" = "%INSTALL_MONSTER_WIDGET%" (
+REM Ask to install the Monster Widget plugin
+SET /P INSTALL_MONSTER_WIDGET_PLUGIN=[Do you want to install the Monster Widget plugin? [y/n] ]
+if "y" = "%INSTALL_MONSTER_WIDGET_PLUGIN%" (
 	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
 	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
 )
 
-REM Install additional plugins
-docker-compose exec --user www-data phpfpm wp plugin install gutenberg --activate
-docker-compose exec --user www-data phpfpm wp plugin install developer --activate
+REM Ask to install the Gutenberg plugin
+SET /P INSTALL_GUTENBERG_PLUGIN=[Do you want to install the Gutenberg plugin? [y/n] ]
+if "y" = "%INSTALL_GUTENBERG_PLUGIN%" (
+	docker-compose exec --user www-data phpfpm wp plugin install gutenberg --activate
+)
+
+REM Ask to install the Developer plugin
+SET /P INSTALL_DEVELOPER_PLUGIN=[Do you want to install the Developer plugin? [y/n] ]
+if "y" = "%INSTALL_DEVELOPER_PLUGIN%" (
+	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
+)
 
 echo "Installation done."
 echo "------------------"
