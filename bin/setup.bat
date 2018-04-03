@@ -29,7 +29,7 @@ REM Install WordPress
 docker-compose exec --user www-data phpfpm wp core download --force
 docker-compose exec --user www-data phpfpm wp core config --force
 
-if true == "%EMPTY_CONTENT%" (
+if true == "%MULTISITE%" (
 	SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
 ) else (
 	SET ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%")
