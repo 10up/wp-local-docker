@@ -63,17 +63,12 @@ services:
 
 Add the following lines to docker-php-ext-xdebug.ini in order to use remote Xdebugging with your IDE.
 
-**Mac**
+**Mac & Windows**
 ```
 xdebug.remote_enable = 1
-xdebug.remote_host = docker.for.mac.host.internal
+xdebug.remote_host = host.docker.internal
 ```
-
-**Windows**
-```
-xdebug.remote_enable = 1
-xdebug.remote_host = docker.for.win.host.internal
-```
+The usage of `host.docker.internal` requires Docker CE 18.03.0 or greater.
 
 **Linux**
 ```
