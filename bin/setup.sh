@@ -15,7 +15,7 @@ if [ -f "./wordpress/wp-config.php" ]; then
 
 	if [ "y" = $REINSTALL ]
 	then
-		docker-compose exec --user www-data phpfpm wp db drop --yes
+		docker-compose exec --user www-data phpfpm wp db reset --yes
 	else
 		echo "Installation aborted."
 		exit 1
@@ -25,7 +25,6 @@ fi
 # Install WordPress
 docker-compose exec --user www-data phpfpm wp core download --force
 docker-compose exec -T --user www-data phpfpm wp core config --force
-docker-compose exec --user www-data phpfpm wp db create
 
 if [ "true" = $MULTISITE ]
 then
