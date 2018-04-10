@@ -45,13 +45,13 @@ To have it persist across reboots, we need to create a “launchd” daemon that
 To achieve this we run the following commands:
 
 ```
-$ cat << EOF | sudo tee -a /Library/LaunchDaemons/com.wp-construct.loopback1.plist
+$ cat << EOF | sudo tee -a /Library/LaunchDaemons/com.wp-docker-construct.loopback1.plist
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>com.wp-construct.loopback1</string>
+    <string>com.wp-docker-construct.loopback1</string>
     <key>ProgramArguments</key>
     <array>
         <string>/sbin/ifconfig</string>
@@ -71,14 +71,14 @@ This will create a plist file with the desired commands.
 Then, we start the service up with:
 
 ```
-$ sudo launchctl load /Library/LaunchDaemons/com.wp-construct.loopback1.plist
+$ sudo launchctl load /Library/LaunchDaemons/com.wp-docker-construct.loopback1.plist
 ```
 
 And make sure it works:
 
 ````
-$ sudo launchctl list | grep com.wp-construct
--   0   com.wp-construct.loopback1
+$ sudo launchctl list | grep com.wp-docker-construct
+-   0   com.wp-docker-construct.loopback1
 ````
 
 ````
