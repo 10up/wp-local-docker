@@ -39,7 +39,8 @@ And add 10.254.254.254
 To the `config/php-fpm/docker-php-ext-xdebug.ini` file and restart the docker images.
 
 ### Make it permanent - MacOS
-The problem is the approach above is that this doesn’t persist across reboots. To make it persist across reboots, we need to create a “launchd” daemon that configures additional IPv4 address.
+The problem with the approach above is that it doesn’t persist across reboots. 
+To have it persist across reboots, we need to create a “launchd” daemon that configures additional IPv4 address.
 
 To achieve this we run the following commands:
 
