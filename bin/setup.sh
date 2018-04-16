@@ -22,6 +22,10 @@ read TITLE
 echo -n "Username: "
 read ADMIN_USER
 
+# Ask for the user password
+echo -n "Password: "
+read ADMIN_WP_PASSWORD
+
 # Ask for the user email
 echo -n "Your Email: "
 read ADMIN_EMAIL
@@ -34,11 +38,17 @@ read MULTISITE
 docker-compose exec --user www-data phpfpm wp core download --force
 docker-compose exec -T --user www-data phpfpm wp core config --force
 
+# Set default password if none was provided
+if [ "" = "$ADMIN_WP_PASSWORD" ]
+then
+    ADMIN_WP_PASSWORD="password"
+fi
+
 if [ "y" = "$MULTISITE" ]
 then
-	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL")
+	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_WP_PASSWORD")
 else
-	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL")
+	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_WP_PASSWORD")
 fi
 
 # Adjust settings
