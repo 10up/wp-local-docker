@@ -31,7 +31,12 @@ REM Install WordPress
 docker-compose exec --user www-data phpfpm wp core download --force
 docker-compose exec --user www-data phpfpm wp core config --force
 
-REM Set default password if none was provided
+REM Set default admin user if none was provided
+if "" == "%ADMIN_USER%" (
+	SET ADMIN_USER="admin"
+)
+
+REM Set default admin password if none was provided
 if "" == "%ADMIN_WP_PASSWORD%" (
 	SET ADMIN_PASSWORD="password"
 )
