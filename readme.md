@@ -39,6 +39,15 @@ Password: password
 Host: mysql
 ```
 
+Default WordPress admin credentials:
+
+```
+Username: admin
+Password: password
+```
+
+Note: if you provided details different to the above during setup, use those instead.
+
 Default Elasticsearch connection information (from within PHP-FPM container):
 
 ```
