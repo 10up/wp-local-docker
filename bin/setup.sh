@@ -38,7 +38,13 @@ read MULTISITE
 docker-compose exec --user www-data phpfpm wp core download --force
 docker-compose exec -T --user www-data phpfpm wp core config --force
 
-# Set default password if none was provided
+# Set default admin user if none was provided
+if [ "" = "$ADMIN_USER" ]
+then
+    ADMIN_USER="admin"
+fi
+
+# Set default admin password if none was provided
 if [ "" = "$ADMIN_WP_PASSWORD" ]
 then
     ADMIN_WP_PASSWORD="password"
