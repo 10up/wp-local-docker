@@ -32,8 +32,64 @@ Run
 
 ```
 sudo ifconfig lo0 alias 10.254.254.254
-````
+```
 
 And add 10.254.254.254
 
 To the `config/php-fpm/docker-php-ext-xdebug.ini` file and restart the docker images.
+
+### Make it permanent - MacOS
+The problem with the approach above is that it doesn’t persist across reboots. 
+To have it persist across reboots, we need to create a “launchd” daemon that configures additional IPv4 address.
+
+To achieve this we run the following commands:
+
+```
+$ cat << EOF | sudo tee -a /Library/LaunchDaemons/com.wp-docker-construct.loopback1.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.wp-docker-construct.loopback1</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/sbin/ifconfig</string>
+        <string>lo0</string>
+        <string>alias</string>
+        <string>127.0.1.1</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+  </dict>
+</plist>
+EOF
+```
+
+This will create a plist file with the desired commands.
+
+Then, we start the service up with:
+
+```
+$ sudo launchctl load /Library/LaunchDaemons/com.wp-docker-construct.loopback1.plist
+```
+
+And make sure it works:
+
+````
+$ sudo launchctl list | grep com.wp-docker-construct
+-   0   com.wp-docker-construct.loopback1
+````
+
+````
+$ ifconfig lo0
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+    options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>
+    inet 127.0.0.1 netmask 0xff000000 
+    inet6 ::1 prefixlen 128 
+    inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+    inet 127.0.1.1 netmask 0xff000000 
+    nd6 options=201<PERFORMNUD,DAD>
+````
+
+Thank you [Felipe Alfaro](https://blog.felipe-alfaro.com/2017/03/22/persistent-loopback-interfaces-in-mac-os-x/) for the tips!
