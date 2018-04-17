@@ -115,5 +115,5 @@ fi
 echo "Installation done."
 echo "------------------"
 echo "Admin username: $ADMIN_USER"
-echo "$ADMIN_PASSWORD"
+echo "Admin password: $ADMIN_WP_PASSWORD"
 open http://localhost/wp-login.php
