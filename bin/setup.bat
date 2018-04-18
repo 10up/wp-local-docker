@@ -94,5 +94,5 @@ if "y" = "%INSTALL_DEVELOPER_PLUGIN%" (
 echo "Installation done."
 echo "------------------"
 echo "Admin Username: %ADMIN_USER%"
-echo "%ADMIN_PASSWORD%"
+echo "Admin Password: %ADMIN_WP_PASSWORD%"
 start "" http://localhost/wp-login.php
