@@ -38,7 +38,7 @@ if "" == "%ADMIN_USER%" (
 
 REM Set default admin password if none was provided
 if "" == "%ADMIN_WP_PASSWORD%" (
-	SET ADMIN_PASSWORD="password"
+	SET ADMIN_WP_PASSWORD="password"
 )
 
 if "y" == "%MULTISITE%" (
