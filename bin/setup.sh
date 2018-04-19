@@ -24,7 +24,7 @@ read ADMIN_USER
 
 # Ask for the user password
 echo -n "Password: "
-read ADMIN_WP_PASSWORD
+read ADMIN_PASSWORD
 
 # Ask for the user email
 echo -n "Your Email: "
@@ -41,20 +41,20 @@ docker-compose exec -T --user www-data phpfpm wp core config --force
 # Set default admin user if none was provided
 if [ "" = "$ADMIN_USER" ]
 then
-    ADMIN_USER="admin"
+	ADMIN_USER="admin"
 fi
 
 # Set default admin password if none was provided
-if [ "" = "$ADMIN_WP_PASSWORD" ]
+if [ "" = "$ADMIN_PASSWORD" ]
 then
-    ADMIN_WP_PASSWORD="password"
+	ADMIN_PASSWORD="password"
 fi
 
 if [ "y" = "$MULTISITE" ]
 then
-	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_WP_PASSWORD")
+	docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_PASSWORD"
 else
-	ADMIN_PASSWORD=$(docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_WP_PASSWORD")
+	docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="$TITLE" --admin_user="$ADMIN_USER" --admin_email="$ADMIN_EMAIL" --admin_password="$ADMIN_PASSWORD"
 fi
 
 # Adjust settings
@@ -115,5 +115,5 @@ fi
 echo "Installation done."
 echo "------------------"
 echo "Admin username: $ADMIN_USER"
-echo "Admin password: $ADMIN_WP_PASSWORD"
+echo "Admin password: $ADMIN_PASSWORD"
 open http://localhost/wp-login.php
