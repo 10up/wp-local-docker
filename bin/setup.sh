@@ -5,7 +5,7 @@ if [ -f "./wordpress/wp-config.php" ]; then
 	echo -n "Do you want to reinstall? [y/n] "
 	read REINSTALL
 
-	if [ "y" = $REINSTALL ]
+	if [ "y" = "$REINSTALL" ]
 	then
 		docker-compose exec --user www-data phpfpm wp db reset --yes
 	else
