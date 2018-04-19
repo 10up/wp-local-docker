@@ -41,7 +41,7 @@ docker-compose exec -T --user www-data phpfpm wp core config --force
 # Set default admin user if none was provided
 if [ "" = "$ADMIN_USER" ]
 then
-    ADMIN_USER="admin"
+	ADMIN_USER="admin"
 fi
 
 # Set default admin password if none was provided
