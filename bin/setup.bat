@@ -19,7 +19,7 @@ REM Ask for the user name
 SET /P ADMIN_USER=[Username: ]
 
 REM Ask for the user password
-SET /P ADMIN_WP_PASSWORD=[Password: ]
+SET /P ADMIN_PASSWORD=[Password: ]
 
 REM Ask for the user email
 SET /P ADMIN_EMAIL=[Your Email: ]
@@ -37,14 +37,14 @@ if "" == "%ADMIN_USER%" (
 )
 
 REM Set default admin password if none was provided
-if "" == "%ADMIN_WP_PASSWORD%" (
-	SET ADMIN_WP_PASSWORD="password"
+if "" == "%ADMIN_PASSWORD%" (
+	SET ADMIN_PASSWORD="password"
 )
 
 if "y" == "%MULTISITE%" (
-	docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%" --admin_password="%ADMIN_WP_PASSWORD%"
+	docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%" --admin_password="%ADMIN_PASSWORD%"
 ) else (
-	docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%" --admin_password="%ADMIN_WP_PASSWORD%"
+	docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%" --admin_password="%ADMIN_PASSWORD%"
 )
 
 REM Adjust settings
@@ -94,5 +94,5 @@ if "y" = "%INSTALL_DEVELOPER_PLUGIN%" (
 echo "Installation done."
 echo "------------------"
 echo "Admin Username: %ADMIN_USER%"
-echo "Admin Password: %ADMIN_WP_PASSWORD%"
+echo "Admin Password: %ADMIN_PASSWORD%"
 start "" http://localhost/wp-login.php
