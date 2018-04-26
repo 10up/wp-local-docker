@@ -3,7 +3,7 @@ services:
   mysql:
     image: mysql:5
     volumes:
-      - "${PWD}/data/db:/var/lib/mysql"
+      - "${PWD}/data/db:/var/lib/mysql:delegated"
     restart: always
     ports:
       - "3306:3306"
@@ -40,7 +40,7 @@ services:
       - memcached
       - elasticsearch
     volumes:
-      - "${PWD}/wordpress:/var/www/html"
+      - "${PWD}/wordpress:/var/www/html:cached"
       - "${PWD}/config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
       - "${PWD}/config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
       - ~/.ssh:/root/.ssh
@@ -55,10 +55,10 @@ services:
       - "443:443"
     image: nginx:latest
     volumes:
-      - "${PWD}/wordpress:/var/www/html"
+      - "${PWD}/wordpress:/var/www/html:cached"
       - "${PWD}/config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
       - "${PWD}/config/certs:/etc/nginx/certs"
-      - "${PWD}/logs/nginx:/var/log/nginx"
+      - "${PWD}/logs/nginx:/var/log/nginx:delegated"
     restart: always
   wpsnapshots:
     image: 10up/wpsnapshots
