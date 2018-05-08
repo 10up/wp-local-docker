@@ -4,7 +4,7 @@ if exist "./wordpress/wp-config.php" (
 
 	SET /P REINSTALL= "Do you want to reinstall? [y/n] "
 
-	if "y" = "%REINSTALL%" (
+	if "y" == "%REINSTALL%" (
 		docker-compose exec --user www-data phpfpm wp db reset --yes
 	) else (
 		echo "Installation aborted."
@@ -74,20 +74,20 @@ if "y" == "%EMPTY_CONTENT%" (
 
 REM Ask to install the Monster Widget plugin
 SET /P INSTALL_MONSTER_WIDGET_PLUGIN=[Do you want to install the Monster Widget plugin? [y/n] ]
-if "y" = "%INSTALL_MONSTER_WIDGET_PLUGIN%" (
+if "y" == "%INSTALL_MONSTER_WIDGET_PLUGIN%" (
 	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
 	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
 )
 
 REM Ask to install the Gutenberg plugin
 SET /P INSTALL_GUTENBERG_PLUGIN=[Do you want to install the Gutenberg plugin? [y/n] ]
-if "y" = "%INSTALL_GUTENBERG_PLUGIN%" (
+if "y" == "%INSTALL_GUTENBERG_PLUGIN%" (
 	docker-compose exec --user www-data phpfpm wp plugin install gutenberg --activate
 )
 
 REM Ask to install the Developer plugin
 SET /P INSTALL_DEVELOPER_PLUGIN=[Do you want to install the Developer plugin? [y/n] ]
-if "y" = "%INSTALL_DEVELOPER_PLUGIN%" (
+if "y" == "%INSTALL_DEVELOPER_PLUGIN%" (
 	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
 )
 
