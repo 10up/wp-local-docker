@@ -38,10 +38,18 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 Default MySQL connection information (from within PHP-FPM container):
 
 ```
-Database: wordpress
-Username: wordpress
-Password: password
-Host: mysql
+Database: `wordpress`
+Username: `wordpress`
+Password: `password`
+Host: `mysql`
+```
+
+Default access to PHPMyAdmin:
+
+```
+Host: [YOUR LOCAL DEVELOPMENT HOST]:8181
+Username: `wordpress` or `root`
+Password: `password`
 ```
 
 Default Elasticsearch connection information (from within PHP-FPM container):
