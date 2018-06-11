@@ -101,15 +101,34 @@ There is also a script in the `/bin` directory that will allow you to execute WP
 
 ## SSH Access
 
-You can easily access the WordPress/PHP container with `docker-compose exec`. Here's a simple alias to add to your `~/.bash_profile`:
+You can easily access the WordPress/PHP container with `docker-compose exec:
 
 ```
-alias dcbash='docker-compose exec --user root phpfpm bash'
+docker-compose exec --user root phpfpm bash
 ```
-
-This alias lets you run `dcbash` to SSH into the PHP/WordPress container.
 
 Alternatively, there is a script in the `/bin` directory that allows you to SSH in to the environment from the project directory directly: `./bin/ssh`.
+
+## Useful Bash Aliases
+
+To increase efficiency with WP Local Docker, the following bash aliases can be added `~/.bashrc` or `~/.bash_profile`:
+
+1. WP-CLI:
+    ```bash
+    alias dcwp='docker-compose exec --user www-data phpfpm wp'
+    ```
+2. SSH into container:
+    ```bash
+    alias dcbash='docker-compose exec --user root phpfpm bash'
+    ```
+3. Multiple instances cannot be run simultaneously. In order to switch projects, you'll need to kill all Docker containers first: 
+    ```bash
+    docker-stop() { docker stop $(docker ps -a -q); }
+    ```
+4. Combine the stop-all command with `docker-compose up` to easily start up an instance with one command: 
+    ```bash
+    alias dup="docker-stop && docker-compose up -d"
+    ```
 
 ## MailCatcher
 
