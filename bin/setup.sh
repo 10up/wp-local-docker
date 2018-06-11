@@ -84,34 +84,6 @@ then
 	docker-compose exec --user www-data phpfpm wp widget delete meta-2
 fi
 
-# Ask to install the Monster Widget plugin
-echo -n "Do you want to install the Monster Widget plugin? [y/n] "
-read INSTALL_MONSTER_WIDGET_PLUGIN
-
-if [ "y" = "$INSTALL_MONSTER_WIDGET_PLUGIN" ]
-then
-	docker-compose exec --user www-data phpfpm wp plugin install monster-widget --activate
-	docker-compose exec --user www-data phpfpm wp widget add monster sidebar-1
-fi
-
-# Ask to install the Gutenberg plugin
-echo -n "Do you want to install the Gutenberg plugin? [y/n] "
-read INSTALL_GUTENBERG_PLUGIN
-
-if [ "y" = "$INSTALL_GUTENBERG_PLUGIN" ]
-then
-	docker-compose exec --user www-data phpfpm wp plugin install gutenberg --activate
-fi
-
-# Ask to install the Developer plugin
-echo -n "Do you want to install the Developer plugin? [y/n] "
-read INSTALL_DEVELOPER_PLUGIN
-
-if [ "y" = "$INSTALL_DEVELOPER_PLUGIN" ]
-then
-	docker-compose exec --user www-data phpfpm wp plugin install developer --activate
-fi
-
 echo "Installation done."
 echo "------------------"
 echo "Admin username: $ADMIN_USER"
