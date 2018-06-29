@@ -33,6 +33,7 @@ services:
     volumes:
       - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
       - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
+      - "./data/elasticsearch:/usr/share/elasticsearch/data"
   phpfpm:
     image: 10up/phpfpm
     depends_on:
