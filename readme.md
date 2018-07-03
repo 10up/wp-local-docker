@@ -4,7 +4,7 @@ This is a Docker based local development environment for WordPress.
 
 ## What's Inside
 
-This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MariaDB, Elasticsearch, nginx, and Memcached. The `/wordpress` directory is the web root which is mapped to the nginx container.
+This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MySQL, Elasticsearch, nginx, and Memcached. The `/wordpress` directory is the web root which is mapped to the nginx container.
 
 You can directly edit PHP, nginx, and Elasticsearch configuration files from within the repo as they are mapped to the correct locations in containers.
 
@@ -21,13 +21,15 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 1. `git clone https://github.com/10up/wp-local-docker.git <my-project-name>`
 1. `cd <my-project-name>`
-    1. On Linux hosts, first run `sh bin/linux-info.sh`, to create/modify your `docker-compose.override.yml` file before proceeding
+    1. On Linux hosts, first run `sh bin/host-setup.sh`, to create/modify your `docker-compose.override.yml` file before proceeding
 1. `docker-compose up`
-1. Run setup to download WordPress and create a `wp-config.php` file.
+1. Run setup to download and install WordPress.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
 	2. On Windows, run `./bin/setup`.
-1. Navigate to `http://localhost` in a browser to finish WordPress setup.
-	1. If you want to use a domain other than `http://localhost`, you'll need to add an entry to your hosts file. Ex: `127.0.0.1 docker.dev`
+
+If you want to use a domain other than `http://localhost`, you'll need to:
+1. Add an entry to your hosts file. Ex: `127.0.0.1 docker.localhost`
+1. Update _WordPress Address (URL)_ and _Site Address (URL)_.
 
 Default MySQL connection information (from within PHP-FPM container):
 
@@ -38,11 +40,36 @@ Password: password
 Host: mysql
 ```
 
+Default WordPress admin credentials:
+
+```
+Username: admin
+Password: password
+```
+
+Note: if you provided details different to the above during setup, use those instead.
+
 Default Elasticsearch connection information (from within PHP-FPM container):
 
-```Host: http://elasticsearch:9200```
+```
+Host: http://elasticsearch:9200
+```
 
 The Elasticsearch container is configured for a maximum heap size of 750MB to prevent out of memory crashes when using the default 2GB memory limit enforced by Docker for Mac and Docker for Windows installations or for Linux installations limited to less than 2GB. If you require additional memory for Elasticsearch override the value in a `docker-compose.override.yml` file as described below.
+
+## Administrative Tools
+
+We've bundled a simple administrative override file to aid in local development where appropriate. This file introduces both [phpMyAdmin](https://www.phpmyadmin.net/) and [phpMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to the Docker network for local administration of the database and object cache, respectively.
+
+You can run this atop a standard Docker installation by specifying _both_ the standard and the override configuration when initializing the service:
+
+```
+docker-compose -f docker-compose.yml -f admin-compose.yml up
+```
+
+The database tools can be accessed [on port 8092](http://localhost:8092).
+
+The cache tools can be accessed [on port 8093](http://localhost:8093).
 
 ## Docker Compose Overrides File
 
@@ -54,7 +81,7 @@ version: '3'
 services:
   phpfpm:
     extra_hosts:
-      - "dashboard.dev:172.18.0.1"
+      - "dashboard.localhost:172.18.0.1"
   elasticsearch:
     environment:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
@@ -77,19 +104,38 @@ If you're running a Linux host, use `$USER:www-data` to run commands as your use
 
 ## SSH Access
 
-You can easily access the WordPress/PHP container with `docker-compose exec`. Here's a simple alias to add to your `~/.bash_profile`:
+You can easily access the WordPress/PHP container with `docker-compose exec:
 
 ```
-alias dcbash='docker-compose exec --user root phpfpm bash'
+docker-compose exec --user root phpfpm bash
 ```
-
-This alias lets you run `dcbash` to SSH into the PHP/WordPress container.
 
 Alternatively, there is a script in the `/bin` directory that allows you to SSH in to the environment from the project directory directly: `./bin/ssh`.
 
+## Useful Bash Aliases
+
+To increase efficiency with WP Local Docker, the following bash aliases can be added `~/.bashrc` or `~/.bash_profile`:
+
+1. WP-CLI:
+    ```bash
+    alias dcwp='docker-compose exec --user www-data phpfpm wp'
+    ```
+2. SSH into container:
+    ```bash
+    alias dcbash='docker-compose exec --user root phpfpm bash'
+    ```
+3. Multiple instances cannot be run simultaneously. In order to switch projects, you'll need to kill all Docker containers first: 
+    ```bash
+    docker-stop() { docker stop $(docker ps -a -q); }
+    ```
+4. Combine the stop-all command with `docker-compose up` to easily start up an instance with one command: 
+    ```bash
+    alias dup="docker-stop && docker-compose up -d"
+    ```
+
 ## MailCatcher
 
-MailCatcher runs a simple local SMTP server which catches any message sent to it, and displays it in it's built-in web interface. All emails sent by WordPress will be intercepted by MailCatcher. To view emails in the MailCatcher web interface, navigate to `http://localhost:1080` in your web browser of choice.
+MailCatcher runs a simple local SMTP server which catches any message sent to it, and displays it in its built-in web interface. All emails sent by WordPress will be intercepted by MailCatcher. To view emails in the MailCatcher web interface, navigate to `http://localhost:1080` in your web browser of choice.
 
 ## WP Snapshots
 
@@ -98,7 +144,7 @@ MailCatcher runs a simple local SMTP server which catches any message sent to it
 Example:
 
 ```sh
-./bin/wpsnapshots configure 10up
+./bin/wpsnapshots.sh configure 10up
 ```
 
 Once configured, you can use all of the WP Snapshots commands, again substituting `./bin/wpsnapshots.sh` for `wpsnapshots` in the CLI.

@@ -1,9 +1,79 @@
 @echo off
-
 if exist "./wordpress/wp-config.php" (
 	echo "WordPress config file found."
-) else (
-	echo "WordPress config file not found. Installing..."
-	docker-compose exec --user www-data phpfpm wp core download
-	docker-compose exec --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
+
+	SET /P REINSTALL= "Do you want to reinstall? [y/n] "
+
+	if "y" == "%REINSTALL%" (
+		docker-compose exec --user www-data phpfpm wp db reset --yes
+	) else (
+		echo "Installation aborted."
+		exit 5
+	)
 )
+
+REM Ask for the site title
+SET /P TITLE=[Site title: ]
+
+REM Ask for the user name
+SET /P ADMIN_USER=[Username: ]
+
+REM Ask for the user password
+SET /P ADMIN_PASSWORD=[Password: ]
+
+REM Ask for the user email
+SET /P ADMIN_EMAIL=[Your Email: ]
+
+REM Ask for the type of installation
+SET /P MULTISITE=[Do you want a multisite installation? [y/n] ]
+
+REM Install WordPress
+docker-compose exec --user www-data phpfpm wp core download --force
+docker-compose exec --user www-data phpfpm wp core config --force
+
+REM Set default admin user if none was provided
+if "" == "%ADMIN_USER%" (
+	SET ADMIN_USER="admin"
+)
+
+REM Set default admin password if none was provided
+if "" == "%ADMIN_PASSWORD%" (
+	SET ADMIN_PASSWORD="password"
+)
+
+if "y" == "%MULTISITE%" (
+	docker-compose exec --user www-data phpfpm wp core multisite-install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%" --admin_password="%ADMIN_PASSWORD%"
+) else (
+	docker-compose exec --user www-data phpfpm wp core install --url=localhost --title="%TITLE%" --admin_user="%ADMIN_USER%" --admin_email="%ADMIN_EMAIL%" --admin_password="%ADMIN_PASSWORD%"
+)
+
+REM Adjust settings
+docker-compose exec --user www-data phpfpm wp rewrite structure "/%postname%/"
+
+REM Ask to remove default content ?
+SET /P EMPTY_CONTENT=[Do you want to remove the default content? [y/n] ]
+
+if "y" == "%EMPTY_CONTENT%" (
+	REM Remove all posts, comments, and terms
+	docker-compose exec --user www-data phpfpm wp site empty --yes
+
+	REM Remove plugins and themes
+	docker-compose exec --user www-data phpfpm wp plugin delete hello
+	docker-compose exec --user www-data phpfpm wp plugin delete akismet
+	docker-compose exec --user www-data phpfpm wp theme delete twentyfifteen
+	docker-compose exec --user www-data phpfpm wp theme delete twentysixteen
+
+	REM Remove widgets
+	docker-compose exec --user www-data phpfpm wp widget delete search-2
+	docker-compose exec --user www-data phpfpm wp widget delete recent-posts-2
+	docker-compose exec --user www-data phpfpm wp widget delete recent-comments-2
+	docker-compose exec --user www-data phpfpm wp widget delete archives-2
+	docker-compose exec --user www-data phpfpm wp widget delete categories-2
+	docker-compose exec --user www-data phpfpm wp widget delete meta-2
+)
+
+echo "Installation done."
+echo "------------------"
+echo "Admin Username: %ADMIN_USER%"
+echo "Admin Password: %ADMIN_PASSWORD%"
+start "" http://localhost/wp-login.php

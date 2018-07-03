@@ -1,7 +1,7 @@
 version: '3'
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:5
     volumes:
       - "./data/db:/var/lib/mysql"
     restart: always
@@ -43,10 +43,11 @@ services:
       - "./wordpress:/var/www/html"
       - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
       - "./config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+      - "./config/php-fpm/wp-cli.local.yml:/var/www/html/wp-cli.local.yml"
       - ~/.ssh:/root/.ssh
     restart: always
     extra_hosts:
-      - "docker-local.dev:172.18.0.1"
+      - "docker-local.localhost:172.18.0.1"
   nginx:
     depends_on:
       - phpfpm
@@ -61,7 +62,7 @@ services:
       - "./logs/nginx:/var/log/nginx"
     restart: always
   wpsnapshots:
-    build: images/wpsnapshots
+    image: 10up/wpsnapshots
     depends_on:
       - mysql
       - phpfpm
