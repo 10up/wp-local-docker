@@ -28,7 +28,7 @@ scss-lint-report.xml
 config.codekit
 
 /wordpress/*
-!/wordpress/wp-cli.local.yml
+!/wordpress/.gitkeep
 
 /data/*
 !/data/.gitkeep
