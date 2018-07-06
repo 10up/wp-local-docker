@@ -21,6 +21,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 1. `git clone https://github.com/10up/wp-local-docker.git <my-project-name>`
 1. `cd <my-project-name>`
+    1. On Linux hosts, first run `sh bin/host-setup.sh`, to create/modify your `docker-compose.override.yml` file before proceeding
 1. `docker-compose up`
 1. Run setup to download and install WordPress.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
@@ -98,6 +99,8 @@ Instead of running a command like `wp plugin install` you instead run `dcwp plug
 `<my-project-name>` directory, and it runs the command inside of the php container.
 
 There is also a script in the `/bin` directory that will allow you to execute WP CLI from the project directory directly: `./bin/wp plugin install`.
+
+If you're running a Linux host, use `$USER:www-data` to run commands as your user.
 
 ## SSH Access
 
