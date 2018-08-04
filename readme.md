@@ -86,6 +86,23 @@ services:
       ES_JAVA_OPTS: "-Xms2g -Xmx2g"
 ```
 
+## Xdebug
+
+Add the following lines to docker-php-ext-xdebug.ini in order to use remote Xdebugging with your IDE.
+
+**Mac & Windows**
+```
+xdebug.remote_enable = 1
+xdebug.remote_host = host.docker.internal
+```
+The usage of `host.docker.internal` requires Docker CE 18.03.0 or greater.
+
+**Linux**
+```
+xdebug.remote_enable = 1
+xdebug.remote_host = 172.18.0.1
+```
+
 ## WP-CLI
 
 Add this alias to `~/.bash_profile` to easily run WP-CLI command.
