@@ -24,7 +24,7 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 1. `docker-compose up`
 1. Run setup to download and install WordPress.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
-	2. On Windows, run `./bin/setup`.
+	2. On Windows, run `.\bin\setup`.
 
 If you want to use a domain other than `http://localhost`, you'll need to:
 1. Add an entry to your hosts file. Ex: `127.0.0.1 docker.localhost`
