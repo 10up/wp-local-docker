@@ -123,7 +123,7 @@ To increase efficiency with WP Local Docker, the following bash aliases can be a
     ```
 3. Multiple instances cannot be run simultaneously. In order to switch projects, you'll need to kill all Docker containers first: 
     ```bash
-    docker-stop() { docker stop $(docker ps -a -q); }
+    docker-stop() { docker stop $(docker ps -aq) && docker rm $(docker ps -aq) }
     ```
 4. Combine the stop-all command with `docker-compose up` to easily start up an instance with one command: 
     ```bash
