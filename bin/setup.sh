@@ -42,18 +42,11 @@ then
 	docker-compose exec --user www-data phpfpm wp site empty --yes
 
 	# Remove plugins and themes
-	docker-compose exec --user www-data phpfpm wp plugin delete hello
-	docker-compose exec --user www-data phpfpm wp plugin delete akismet
-	docker-compose exec --user www-data phpfpm wp theme delete twentyfifteen
-	docker-compose exec --user www-data phpfpm wp theme delete twentysixteen
+	docker-compose exec --user www-data phpfpm wp plugin delete hello akismet
+	docker-compose exec --user www-data phpfpm wp theme delete twentyfifteen twentysixteen
 
 	# Remove widgets
-	docker-compose exec --user www-data phpfpm wp widget delete recent-posts-2
-	docker-compose exec --user www-data phpfpm wp widget delete recent-comments-2
-	docker-compose exec --user www-data phpfpm wp widget delete archives-2
-	docker-compose exec --user www-data phpfpm wp widget delete search-2
-	docker-compose exec --user www-data phpfpm wp widget delete categories-2
-	docker-compose exec --user www-data phpfpm wp widget delete meta-2
+	docker-compose exec --user www-data phpfpm wp widget delete search-2 recent-posts-2 recent-comments-2 archives-2 categories-2 meta-2
 fi
 
 echo "Installation done."
