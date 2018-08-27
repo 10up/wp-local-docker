@@ -19,7 +19,7 @@ echo -n "Do you want a multisite installation? [y/n] "
 read MULTISITE
 
 # Install WordPress
-docker-compose exec phpfpm su -s /bin/bash www-data -c "pwd && wp core download --force"
+docker-compose exec phpfpm su -s /bin/bash www-data -c "wp core download --force"
 docker-compose exec -T phpfpm su -s /bin/bash www-data -c "wp core config --force"
 
 if [ "y" = "$MULTISITE" ]
