@@ -154,6 +154,31 @@ Examples:
 ./bin/wpsnapshots.sh search <search-text>
 ```
 
+## Xdebug
+
+[Xdebug](https://xdebug.org/) is a PHP extension to assist with debugging and development.
+
+In order to use remote Xdebugging follow the instructions below according to your favorite IDE.
+
+### Visual Studio Code
+1. Install the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) extension.
+2. In your project, go to the debugger, click the gear icon and choose PHP. A new launch configuration will be created for you.
+3. Set the `pathMappings` settings in your launch.json. Example:
+```json
+"configurations": [
+    {
+        "name": "Listen for XDebug",
+        "type": "php",
+        "request": "launch",
+        "port": 9000,
+        "pathMappings": {
+            "/var/www/html": "${workspaceRoot}/wordpress",
+        }
+    },
+    //...
+]
+```
+
 ## Updating WP Local Docker
 
 WP Local Docker is an ever-evolving tool, and it's important to keep your local install up-to-date. Don't forget to `git pull` the latest WP Local Docker code every once in a while to make sure you're running the latest version. We also recommend "watching" this repo on GitHub to stay on top of the latest development. You won’t need to grab every update, but you’ll be aware of bug fixes and enhancements that’ll keep your local development environments running smoothly.
