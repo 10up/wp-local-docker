@@ -62,5 +62,5 @@ services:
       - mysql
       - phpfpm
     volumes:
-      - "./config/wpsnapshots:/wpsnapshots"
+      - "./config/wpsnapshots:/home/wpsnapshots/.wpsnapshots"
       - "./wordpress:/var/www/html"

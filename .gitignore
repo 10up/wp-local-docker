@@ -42,3 +42,4 @@ notes.md
 /config/elasticsearch/plugins/*
 
 config/wpsnapshots/.wpsnapshots.json
+config/wpsnapshots/config.json
