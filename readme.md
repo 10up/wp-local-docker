@@ -21,7 +21,10 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 1. `git clone https://github.com/10up/wp-local-docker.git <my-project-name>`
 1. `cd <my-project-name>`
-1. `docker-compose up`
+1. Start Docker containers
+  1. On Linux / Unix / OSX, run `sh bin/start.sh`.
+  2. On Windows, run `.\bin\start`.
+  3. Or `docker-compose up`
 1. Run setup to download and install WordPress.
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
 	2. On Windows, run `.\bin\setup`.
@@ -56,12 +59,21 @@ Host: http://elasticsearch:9200
 
 The Elasticsearch container is configured for a maximum heap size of 750MB to prevent out of memory crashes when using the default 2GB memory limit enforced by Docker for Mac and Docker for Windows installations or for Linux installations limited to less than 2GB. If you require additional memory for Elasticsearch override the value in a `docker-compose.override.yml` file as described below.
 
+1. Stopping Docker containers
+  1. On Linux / Unix / OSX, run `sh bin/stop.sh`.
+  2. On Windows, run `.\bin\stop`.
+  3. Or `docker-compose down`
+
 ## Administrative Tools
 
 We've bundled a simple administrative override file to aid in local development where appropriate. This file introduces both [phpMyAdmin](https://www.phpmyadmin.net/) and [phpMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to the Docker network for local administration of the database and object cache, respectively.
 
 You can run this atop a standard Docker installation by specifying _both_ the standard and the override configuration when initializing the service:
 
+1. On Linux / Unix / OSX, run `sh bin/start-all.sh`.
+2. On Windows, run `.\bin\start-all`.
+
+or
 ```
 docker-compose -f docker-compose.yml -f admin-compose.yml up
 ```
