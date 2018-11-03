@@ -3,7 +3,8 @@ services:
   mysql:
     image: mysql:5
     volumes:
-      - "./data/db:/var/lib/mysql:delegated"
+      - db-volume:/var/lib/mysql
+      - "./data/db:/docker-entrypoint-initdb.d"
     ports:
       - "3306:3306"
     environment:
@@ -64,3 +65,6 @@ services:
     volumes:
       - "./config/wpsnapshots:/home/wpsnapshots/.wpsnapshots"
       - "./wordpress:/var/www/html"
+
+volumes:
+  db-volume:
