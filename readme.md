@@ -1,3 +1,5 @@
+**WP Local Docker V2 (Beta) is now available. [Documentation available here](https://10up.github.io/wp-local-docker-docs/).**
+
 # WordPress Docker Development Environment
 
 This is a Docker based local development environment for WordPress.
