@@ -20,22 +20,23 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 ## Setup
 
-1. Add a custom URL to your hosts file.
-    1. On Linux / Unix / OSX, the file is found at `/private/etc/hosts`
-    2. `127.0.0.1  docker.local`
 2. `git clone git@github.com:log-oscon/WP-Docker-Construct.git <my-project-name>`
 3. `cd <my-project-name>`
 4. `docker-compose up`
-5. Edit `setup.sh` to declare single or multisite install
-    1. `SINGLE_SITE=0` (single site)
-    2. `SINGLE_SITE=1` (multisite site)
-6. Edit `setup.sh` if you want to add this docker image to another project
-    1. `TITLE="Your Project Name"`
-    2. `REPOSITORY="projectgiturl"`
-7. Run setup to download WordPress and create a `wp-config.php` file.
+7. Run WP-Docker-Construct setup script:
 	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
+2. The script will ask you some questions and guide you through the installation process:
+	1. *Write your domain | default: localhost |:* demo.localhost
+	2. *Write your admin email:* demo@localhost
+	3. *Write your project repository URL (empty for a clean install):* git@github.com:demo/demo.git
+	4. *Install Wordpress core? (y/n)? default y:* y
+	5. *is Multisite (y/n)?* n
+	6. *Update Wordpress? (y/n)? default y:* y
+	7. *Write URL: demo.local on hosts (y/n)? default n:* y 
+	8. *All done!*
 
-Default MySQL connection information (from within PHP-FPM container):
+
+**Default MySQL connection information (from within PHP-FPM container):**
 
 ```
 Database: `wordpress`
@@ -44,7 +45,7 @@ Password: `password`
 Host: `mysql`
 ```
 
-Default access to PHPMyAdmin:
+**Default access to PHPMyAdmin:**
 
 ```
 Host: [YOUR LOCAL DEVELOPMENT HOST]:8181
@@ -52,11 +53,23 @@ Username: `wordpress` or `root`
 Password: `password`
 ```
 
-Default Elasticsearch connection information (from within PHP-FPM container):
+**Default Elasticsearch connection information (from within PHP-FPM container):**
 
 ```Host: http://elasticsearch:9200```
 
 The Elasticsearch container is configured for a maximum heap size of 750MB to prevent out of memory crashes when using the default 2GB memory limit enforced by Docker for Mac and Docker for Windows installations or for Linux installations limited to less than 2GB. If you require additional memory for Elasticsearch override the value in a `docker-compose.override.yml` file as described below.
+
+## docker-sync setup (optional)
+
+[docker-sync](http://docker-sync.io/) allows you to "run your application at full speed while syncing your code for development".
+To run docker-sync do as following: 
+
+1. Install docker-sync: `gem install docker-sync`
+2. Configure docker-sync: 
+	4. Included `docker-sync.yml` has a default sync that matches a volume in `docker-compose-dev.yml`
+	3. Included `docker-compose-dev.yml` should be identical to `docker-compose.yml` plus the sync information parameters 
+4. Run docker-sync (it might take a while in the first run) ` docker stop $(docker ps -a -q) && docker-sync-stack start`
+
 
 ## Docker Compose Overrides File
 
@@ -125,6 +138,7 @@ Kudos to [10up](https://github.com/10up/wp-local-docker).
 | Get a SQL content seed with WP-CLI  |        |   [2]   |
 | Choose Node version                 |        |         |
 | Activate WP plugins after building  |        |         |
+| Add docker-sync                     |    X   |         |
 
 [1] There is an issue while trying to run the `npm run build` script.
 [2] https://make.wordpress.org/cli/handbook/running-commands-remotely/#aliases

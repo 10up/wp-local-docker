@@ -1,0 +1,10 @@
+version: "2"
+
+options:
+  verbose: true
+syncs:
+  wp-osx-sync: # tip: add -sync and you keep consistent names as a convention
+    src: './wordpress'
+    # sync_strategy: 'native_osx' # Is now default on MacOS X. unison and rsync also available. 
+    sync_excludes: ['cache', 'languages','upgrade','uploads','.git*','.DS_Store', '._*', '.docker*', 'docker*yml', 'Dockerfile*', 'wp-admin', 'wp-includes']
+# Refer to https://docker-sync.readthedocs.io/ for configuration options. 
