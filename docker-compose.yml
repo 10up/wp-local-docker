@@ -27,8 +27,8 @@ services:
     ports:
       - "9200:9200"
     volumes:
-      - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
-      - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
+      - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:cached"
+      - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins:cached"
       - "./data/elasticsearch:/usr/share/elasticsearch/data:delegated"
   phpfpm:
     image: 10up/phpfpm
@@ -37,11 +37,11 @@ services:
       - memcached
       - elasticsearch
     volumes:
-      - "./wordpress:/var/www/html"
-      - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
-      - "./config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-      - "./config/php-fpm/wp-cli.local.yml:/var/www/html/wp-cli.local.yml"
-      - ~/.ssh:/root/.ssh
+      - "./wordpress:/var/www/html:cached"
+      - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini:cached"
+      - "./config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:cached"
+      - "./config/php-fpm/wp-cli.local.yml:/var/www/html/wp-cli.local.yml:cached"
+      - "~/.ssh:/root/.ssh:cached"
     extra_hosts:
       - "docker-local.localhost:172.18.0.1"
   nginx:
@@ -52,15 +52,15 @@ services:
       - "443:443"
     image: nginx:latest
     volumes:
-      - "./wordpress:/var/www/html"
-      - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
-      - "./config/certs:/etc/nginx/certs"
-      - "./logs/nginx:/var/log/nginx"
+      - "./wordpress:/var/www/html:cached"
+      - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf:cached"
+      - "./config/certs:/etc/nginx/certs:cached"
+      - "./logs/nginx:/var/log/nginx:cached"
   wpsnapshots:
     image: 10up/wpsnapshots
     depends_on:
       - mysql
       - phpfpm
     volumes:
-      - "./config/wpsnapshots:/home/wpsnapshots/.wpsnapshots"
-      - "./wordpress:/var/www/html"
+      - "./config/wpsnapshots:/home/wpsnapshots/.wpsnapshots:cached"
+      - "./wordpress:/var/www/html:cached"
