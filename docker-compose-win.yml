@@ -1,0 +1,79 @@
+version: '3'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    restart: always
+    ports:
+      - 8181:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: password
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+  mysql:
+    image: wodby/mariadb:10.2-3.0.2
+    volumes:
+      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.    
+      - mariadb_data:/var/lib/mysql # I want to manage volumes manually.
+    restart: always
+    ports:
+      - "3333:3333"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: password
+  mailcatcher:
+     image: schickling/mailcatcher
+     restart: always
+     ports:
+       - "1025:1025"
+       - "1080:1080"
+     environment:
+       MAILCATCHER_PORT: 1025
+  memcached:
+    image: memcached:latest
+    restart: always
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    restart: always
+    environment:
+      ES_JAVA_OPTS: "-Xms750m -Xmx750m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - "./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+      - "./config/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
+  phpfpm:
+    image: 10up/phpfpm
+    depends_on:
+      - mysql
+      - memcached
+      - elasticsearch
+    volumes:
+      - "./wordpress:/var/www/html"
+      - "./config/php-fpm/php.ini:/usr/local/etc/php/php.ini"
+      - "./config/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+      - ~/.ssh:/root/.ssh
+    restart: always
+    extra_hosts:
+      - "docker-local.dev:172.18.0.1"
+      - "je.local:172.18.0.1"
+  nginx:
+    depends_on:
+      - phpfpm
+    ports:
+      - "80:80"
+      - "443:443"
+    image: nginx:latest
+    volumes:
+      - "./wordpress:/var/www/html"
+      - "./config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./config/certs:/etc/nginx/certs"
+      - "./logs/nginx:/var/log/nginx"
+    restart: always
+volumes:
+  mariadb_data:
+    external: true

@@ -17,24 +17,39 @@ The `/config/elasticsearch/plugins` folder is mapped to the plugins folder in th
 
 * [Docker](https://www.docker.com/)
 * [docker-compose](https://docs.docker.com/compose/)
+* [Git Bash](https://git-scm.com/download/win) (**win10 users**)
 
 ## Setup
 
-2. `git clone git@github.com:log-oscon/WP-Docker-Construct.git <my-project-name>`
-3. `cd <my-project-name>`
-4. `docker-compose up`
-7. Run WP-Docker-Construct setup script:
-	1. On Linux / Unix / OSX, run `sh bin/setup.sh`.
-2. The script will ask you some questions and guide you through the installation process:
+2. Clone the project
+	
+	`$ git clone git@github.com:log-oscon/WP-Docker-Construct.git <my-project-name>`
+3. change to project directory 
+	
+	`$ cd <my-project-name>`
+4. **Windows only**: setup proper compose file:
+
+	`cp  docker-compose-win.yml docker-compose.yml`
+4. ** run docker-compose: 
+	
+	`$ docker-compose up`
+	(**windows only**: It's going to ask to create a volume, just do it.)
+5. Open a new bash, and Run WP-Docker-Construct setup script:
+	
+	`$ sh bin/setup.sh`.
+6. The script will ask you some questions and guide you through the installation process:
 	1. *Write your domain | default: localhost |:* demo.localhost
 	2. *Write your admin email:* demo@localhost
 	3. *Write your project repository URL (empty for a clean install):* git@github.com:demo/demo.git
 	4. *Install Wordpress core? (y/n)? default y:* y
 	5. *is Multisite (y/n)?* n
 	6. *Update Wordpress? (y/n)? default y:* y
-	7. *Write URL: demo.local on hosts (y/n)? default n:* y 
+	7. *Write URL: demo.local on hosts (y/n)? default n:* y <sup>**(1)**</sup>
 	8. *All done!*
 
+**Notes:**
+
+<sup>(1)</sup> Windows: this step will not work properly. You'll have to add the line to hosts file manually. With administrator previleges, just edit *c:\Windows\System32\Drivers\etc\hosts* and add a line like: 	`$ demo.localhost 127.0.0.1`.
 
 **Default MySQL connection information (from within PHP-FPM container):**
 

@@ -1,4 +1,7 @@
 #!/bin/bash
+
+export COMPOSE_INTERACTIVE_NO_CLI=1  
+
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
 cd ${ROOT}
 
@@ -49,8 +52,8 @@ fi
 wordpress_install() {
 
 	echo "Run Wordpress instalation..."
-	docker-compose exec --user www-data phpfpm wp core download
-	docker-compose exec --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
+	docker-compose exec -T --user www-data phpfpm wp core download
+	docker-compose exec -T --user www-data phpfpm wp core config --dbhost=mysql --dbname=wordpress --dbuser=root --dbpass=password
 
 	read -p "is Multisite (y/n)? default n: " is_multisite
 	case "${is_multisite}" in
@@ -61,14 +64,14 @@ wordpress_install() {
 
 	if [ ${MULTISITE} -eq 1 ]; then
 		echo " * Setting up multisite \"${TITLE}\" at ${URL}"
-		docker-compose exec --user www-data phpfpm wp core multisite-install --url="$URL" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}" --subdomains
-		docker-compose exec --user www-data phpfpm wp super-admin add admin
+		docker-compose exec -T --user www-data phpfpm wp core multisite-install --url="$URL" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}" --subdomains
+		docker-compose exec -T --user www-data phpfpm wp super-admin add admin
 	else
 		echo " * Setting up \"${TITLE}\" at ${URL}"
-		docker-compose exec --user www-data phpfpm wp core install --url="${URL}" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}"
+		docker-compose exec -T --user www-data phpfpm wp core install --url="${URL}" --title="${TITLE}" --admin_user=admin --admin_password=password --admin_email="${ADMIN_EMAIL}"
 	fi
 
-	docker-compose exec --user www-data phpfpm wp db create --url="${URL}" --path="${ROOT}/wordpress"
+	docker-compose exec -T --user www-data phpfpm wp db create --url="${URL}" --path="${ROOT}/wordpress"
 
 }
 
@@ -82,8 +85,8 @@ esac
 wordpress_updater() {
 	## UPDATING COMPONENTS ##
 	echo "Updating WordPress"
-	docker-compose exec --user www-data phpfpm wp core update
-	docker-compose exec --user www-data phpfpm wp core update-db
+	docker-compose exec -T --user www-data phpfpm wp core update
+	docker-compose exec -T --user www-data phpfpm wp core update-db
 }
 
 read -p "Update Wordpress? (y/n)? default y: " is_update
