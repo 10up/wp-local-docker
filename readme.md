@@ -2,7 +2,9 @@
 
 # WordPress Docker Development Environment
 
-This is a Docker based local development environment for WordPress.
+> This is a Docker based local development environment for WordPress.
+
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level)
 
 ## What's Inside
 
@@ -163,6 +165,7 @@ Examples:
 In order to use remote Xdebugging follow the instructions below according to your favorite IDE.
 
 ### Visual Studio Code
+
 1. Install the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) extension.
 2. In your project, go to the debugger, click the gear icon and choose PHP. A new launch configuration will be created for you.
 3. Set the `pathMappings` settings in your launch.json. Example:
@@ -186,6 +189,10 @@ In order to use remote Xdebugging follow the instructions below according to you
 WP Local Docker is an ever-evolving tool, and it's important to keep your local install up-to-date. Don't forget to `git pull` the latest WP Local Docker code every once in a while to make sure you're running the latest version. We also recommend "watching" this repo on GitHub to stay on top of the latest development. You won’t need to grab every update, but you’ll be aware of bug fixes and enhancements that’ll keep your local development environments running smoothly.
 
 It's especially important to `git pull` the latest code before you `docker pull` upgrades to your Docker images, either as a potential fix for an issue or just to make sure they’re running the latest versions of everything. This will make sure you have the latest WP Local Docker code first, including the `docker-compose.yml` file that defines what Docker images and versions the environment uses.
+
+## Support Level
+
+**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
 
 ## Credits
 
