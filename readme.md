@@ -6,7 +6,23 @@
 
 [![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level)
 
-## What's Inside
+## Table of Contents  
+* [Overview](#overview)
+* [Requirements](#requirements)
+* [Setup](#setup)
+* [Administrative Tools](#administrative-tools)
+* [Docker Compose Overrides File](#docker-compose-overrides-file)
+* [WP CLI](#wp-cli)
+* [SSH Access](#ssh-access)
+* [Useful Bash Aliases](#useful-bash-aliases)
+* [MailCatcher](#mailcatcher)
+* [WP Snapshots](#wp-snapshots)
+* [Xdebug](#xdebug)
+	* [Visual Studio Code](#visual-studio-code)
+* [Updating WP Local Docker](#updating-wp-local-docker)
+* [Credits](#credits)
+
+## Overview
 
 This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MySQL, Elasticsearch, nginx, and Memcached. The `/wordpress` directory is the web root which is mapped to the nginx container.
 
