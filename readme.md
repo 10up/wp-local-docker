@@ -4,7 +4,7 @@
 
 > This is a Docker based local development environment for WordPress.
 
-[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level)
+[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![MIT License](https://img.shields.io/github/license/10up/wp-local-docker.svg)](https://github.com/10up/wp-local-docker/blob/master/LICENSE.md)
 
 ## Table of Contents  
 * [Overview](#overview)
