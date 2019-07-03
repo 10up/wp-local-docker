@@ -2,9 +2,27 @@
 
 # WordPress Docker Development Environment
 
-This is a Docker based local development environment for WordPress.
+> This is a Docker based local development environment for WordPress.
 
-## What's Inside
+[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![MIT License](https://img.shields.io/github/license/10up/wp-local-docker.svg)](https://github.com/10up/wp-local-docker/blob/master/LICENSE.md)
+
+## Table of Contents  
+* [Overview](#overview)
+* [Requirements](#requirements)
+* [Setup](#setup)
+* [Administrative Tools](#administrative-tools)
+* [Docker Compose Overrides File](#docker-compose-overrides-file)
+* [WP CLI](#wp-cli)
+* [SSH Access](#ssh-access)
+* [Useful Bash Aliases](#useful-bash-aliases)
+* [MailCatcher](#mailcatcher)
+* [WP Snapshots](#wp-snapshots)
+* [Xdebug](#xdebug)
+	* [Visual Studio Code](#visual-studio-code)
+* [Updating WP Local Docker](#updating-wp-local-docker)
+* [Credits](#credits)
+
+## Overview
 
 This project is based on [docker-compose](https://docs.docker.com/compose/). By default, the following containers are started: PHP-FPM, MySQL, Elasticsearch, nginx, and Memcached. The `/wordpress` directory is the web root which is mapped to the nginx container.
 
@@ -163,6 +181,7 @@ Examples:
 In order to use remote Xdebugging follow the instructions below according to your favorite IDE.
 
 ### Visual Studio Code
+
 1. Install the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) extension.
 2. In your project, go to the debugger, click the gear icon and choose PHP. A new launch configuration will be created for you.
 3. Set the `pathMappings` settings in your launch.json. Example:
@@ -186,6 +205,10 @@ In order to use remote Xdebugging follow the instructions below according to you
 WP Local Docker is an ever-evolving tool, and it's important to keep your local install up-to-date. Don't forget to `git pull` the latest WP Local Docker code every once in a while to make sure you're running the latest version. We also recommend "watching" this repo on GitHub to stay on top of the latest development. You won’t need to grab every update, but you’ll be aware of bug fixes and enhancements that’ll keep your local development environments running smoothly.
 
 It's especially important to `git pull` the latest code before you `docker pull` upgrades to your Docker images, either as a potential fix for an issue or just to make sure they’re running the latest versions of everything. This will make sure you have the latest WP Local Docker code first, including the `docker-compose.yml` file that defines what Docker images and versions the environment uses.
+
+## Support Level
+
+**Stable:** 10up is not planning to develop any new features for this, but will still respond to bug reports and security concerns.  We welcome PRs, but any that include new features should be small and easy to integrate and should not include breaking changes.  We otherwise intend to keep this tested up to the most recent version of WordPress.
 
 ## Credits
 
