@@ -1,4 +1,4 @@
-**WP Local Docker V2 is now available. [Documentation available here](https://10up.github.io/wp-local-docker-docs/).**
+**[WP Local Docker V2](https://github.com/10up/wp-local-docker-v2) is now available, please update to that version as v1 is no longer supported. [Documentation available here](https://10up.github.io/wp-local-docker-docs/).**
 
 # WordPress Docker Development Environment
 
