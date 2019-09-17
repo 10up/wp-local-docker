@@ -1,10 +1,10 @@
-**WP Local Docker V2 is now available. [Documentation available here](https://10up.github.io/wp-local-docker-docs/).**
+**[WP Local Docker V2](https://github.com/10up/wp-local-docker-v2) is now available, please update to that version as v1 is no longer supported. [Documentation available here](https://10up.github.io/wp-local-docker-docs/).**
 
 # WordPress Docker Development Environment
 
 > This is a Docker based local development environment for WordPress.
 
-[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![MIT License](https://img.shields.io/github/license/10up/wp-local-docker.svg)](https://github.com/10up/wp-local-docker/blob/master/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-archived-red.svg)](#support-level) [![MIT License](https://img.shields.io/github/license/10up/wp-local-docker.svg)](https://github.com/10up/wp-local-docker/blob/master/LICENSE.md)
 
 ## Table of Contents  
 * [Overview](#overview)
@@ -208,7 +208,7 @@ It's especially important to `git pull` the latest code before you `docker pull`
 
 ## Support Level
 
-**Stable:** 10up is not planning to develop any new features for this, but will still respond to bug reports and security concerns.  We welcome PRs, but any that include new features should be small and easy to integrate and should not include breaking changes.  We otherwise intend to keep this tested up to the most recent version of WordPress.
+**Archived:** This project is no longer maintained by 10up.  We are no longer responding to Issues or Pull Requests unless they relate to security concerns.  We encourage interested developers to fork this project and make it their own!
 
 ## Credits
 
